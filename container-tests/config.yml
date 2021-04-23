@@ -1,0 +1,13 @@
+# Documentation can be found here https://github.com/GoogleContainerTools/container-structure-test
+schemaVersion: "2.0.0"
+
+fileExistenceTests:
+  - name: 'Jar File'
+    path: '/ms-ds1500-controller.jar'
+    shouldExist: true
+  - name: 'Config File'
+    path: '/config.yml'
+    shouldExist: true
+
+metadataTest:
+  entrypoint: [ "java", "-jar", "/ms-ds1500-controller.jar", "server",  "/config.yml"]

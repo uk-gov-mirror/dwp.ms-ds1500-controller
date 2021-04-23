@@ -1,0 +1,47 @@
+server:
+  applicationConnectors:
+  - type: ${SERVER_APP_CONNECTOR:-http}
+    port: ${SERVER_APP_PORT:-9013}
+  adminConnectors:
+  - type: ${SERVER_ADMIN_CONNECTOR:-http}
+    port: ${SERVER_ADMIN_PORT:-0}
+  requestLog:
+    type: external
+
+pdfFeeGeneratorUrl: ${PDF_FEE_GENERATOR_URL}
+pdfGeneratorUrl: ${PDF_GENERATOR_URL}
+
+ds1500FeeDownladPdfName: generatedDS1500Fee.pdf
+ds1500DownloadPdfName: generatedDS1500.pdf
+
+kmsCryptoConfiguration:
+  kmsEndpointOverride: ${KMS_ENDPOINT_OVERRIDE:-null}
+  dataKeyRequestId: ${KMS_DATA_KEY_REQUEST_ID:-test_request_id}
+
+snsTopicName: ${SNS_TOPIC_NAME:-ds1500-topic}
+snsRoutingKey: ${SNS_ROUTING_KEY:-sns.ds1500.new}
+snsSubject: ${SNS_SUBJECT:-ds1500-controller}
+snsEncryptMessages: ${SNS_ENCRYPT_MESSAGES:-true}
+
+snsConfiguration:
+  s3EndpointOverride: ${S3_ENDPOINT_OVERRIDE:-null}
+  endpointOverride: ${ENDPOINT_OVERRIDE:-null}
+  largePayloadSupportEnabled: ${LARGE_PAYLOAD_SUPPORT_ENABLED:-false}
+  pathStyleAccessEnabled: ${PATH_STYLE_ACCESS_ENABLED:-true}
+  s3BucketName: ${S3_BUCKET_NAME}
+  region: ${REGION:-EU_WEST_2}
+
+sslTruststoreFilenamePdf: ${SSL_TRUSTSTORE_FILENAME_PDF:-null}
+sslKeystoreFilenamePdf: ${SSL_KEYSTORE_FILENAME_PDF:-null}
+sslTruststorePasswordPdf: ${SSL_TRUSTSTORE_PASSWORD_PDF:-null}
+sslKeystorePasswordPdf: ${SSL_KEYSTORE_PASSWORD_PDF:-null}
+
+sslTruststoreFilenameFeePdf: ${SSL_TRUSTSTORE_FILENAME_FEE_PDF:-null}
+sslKeystoreFilenameFeePdf: ${SSL_KEYSTORE_FILENAME_FEE_PDF:-null}
+sslTruststorePasswordFeePdf: ${SSL_TRUSTSTORE_PASSWORD_FEE_PDF:-null}
+sslKeystorePasswordFeePdf: ${SSL_KEYSTORE_PASSWORD_FEE_PDF:-null}
+
+applicationInfoEnabled: ${APPLICATION_INFO_ENABLED:-false}
+
+logging:
+  type: external

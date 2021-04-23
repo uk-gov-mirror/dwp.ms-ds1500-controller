@@ -1,0 +1,48 @@
+server:
+  applicationConnectors:
+  - type: http
+    port: 9013
+  adminConnectors:
+  - type: http
+    port: 0
+  requestLog:
+    type: external
+
+pdfFeeGeneratorUrl: http://localhost:9990/
+pdfGeneratorUrl: http://localhost:9015/
+
+ds1500FeeDownladPdfName: generatedDS1500Fee.pdf
+ds1500DownloadPdfName: generatedDS1500.pdf
+
+kmsCryptoConfiguration:
+  kmsEndpointOverride: http://localstack:4566
+  dataKeyRequestId: alias/test_request_id
+
+snsTopicName: ds1500-topic
+snsRoutingKey: sns.ds1500.new
+snsSubject: ds1500-controller
+snsEncryptMessages: true
+
+snsConfiguration:
+  s3EndpointOverride: http://localstack:4566
+  endpointOverride: http://localstack:4566
+  largePayloadSupportEnabled: false
+  pathStyleAccessEnabled: true
+  s3BucketName: "sns-bucket"
+  region: US_EAST_1
+
+
+sslTruststoreFilenamePdf: src/test/resources/__files/ControllerPdfTruststore.ts
+sslKeystoreFilenamePdf: src/test/resources/__files/DS1500Controller.ks
+sslTruststorePasswordPdf: password
+sslKeystorePasswordPdf: password
+
+sslTruststoreFilenameFeePdf: src/test/resources/__files/ControllerFeePdfTruststore.ts
+sslKeystoreFilenameFeePdf: src/test/resources/__files/DS1500Controller.ks
+sslTruststorePasswordFeePdf: password
+sslKeystorePasswordFeePdf: password
+
+logging:
+  level: INFO
+  loggers:
+    "uk.gov": DEBUG

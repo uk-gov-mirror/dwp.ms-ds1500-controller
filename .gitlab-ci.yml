@@ -1,0 +1,64 @@
+include:
+  - local: "/gitlab-ci/includes.yml"
+
+stages:
+  - update-version
+  - code-quality
+  - code-test
+  - application-build
+  - code-analysis
+  - site-report
+  - image-build
+  - container-image-test
+  - component-test
+  - image-push
+  - tactical-push-publish
+  - update-project-metadata
+  - generate-api-docs
+  - pages
+  - open-source
+  - create-schedules
+
+variables:
+  # Product
+  PRODUCT: ds1500 # Used by the push fragments to build artifact destinations
+  SERVICE_NAME: "controller" # Used by pages-tech-docs fragment to create docs site
+  # Project Badges
+  REPO_OWNER: "Team Falcon"
+  REPO_PATTERN: "V3 CI"
+  # Config
+  BUILD_TYPE: "MAVEN"
+  MAVEN_IMAGE: "maven:3-jdk-11"
+  MVN_OPTS: "-DLOG_LEVEL=INFO"
+  MVN_CLI_OPTS: "-Dhttp.proxyHost=proxy.local.dwpcloud.uk -Dhttp.proxyPort=3128 -Dhttp.nonProxyHosts='localhost|docker|127.0.0.1|localstack' -Dhttps.proxyHost=proxy.local.dwpcloud.uk -Dhttps.proxyPort=3128 -Dhttps.nonProxyHosts='localhost|docker|127.0.0.1|localstack' --batch-mode"
+  # Tactical
+  DEV_BUCKET_URL: "s3://uk.gov.dwp.deploy-artefacts"
+  DOCKER_NEXUS_COMPONENT: "controller"
+  HTDS_DOCKER_PULL_REPO: "nexus.service.health-dev.dwpcloud.uk:5000"
+  HTDS_DOCKER_PUSH_REPO: "nexus.service.health-dev.dwpcloud.uk:5001"
+  LOCAL_COMPONENT_NAME: "controller"
+  LOCAL_PROJECT_NAME: "ds1500"
+  GITHUB_REPO_NAME: "ms-ds1500-controller" # Used for open-source fragment
+
+required-fragment-check:
+  variables:
+    RULESET: MAVEN_CI
+
+trivy-container:
+  variables:
+    ACCEPTABLE_HIGH_FAILURE_COUNT: 6
+
+maven-cucumber:
+  extends: .docker-compose-run
+  stage: code-test
+  variables:
+    DOCKER_COMPOSE_FILE: "docker-compose.yml"
+    DOCKER_COMPOSE_COMMAND: "--exit-code-from cucumber-tests"
+
+create-develop-nightly-schedule:
+  extends: .add-schedule
+  variables:
+    SCHEDULE_NAME: Nightly-Develop-CI-Build
+    SCHEDULE_BRANCH: develop
+    SCHEDULE_CRON: "0 20 * * *"
+    RANDOMIZE_MINS: "true"

@@ -1,0 +1,12 @@
+**/.DS_Store
+.idea/
+*.iml
+target/
+.classpath
+.project
+.settings/
+outputs/
+work
+dev.yml
+Jenkinsfile
+**/dummy.pdf
