@@ -6,7 +6,7 @@
 
     <groupId>uk.gov.dwp.health.ds1500</groupId>
     <artifactId>ms-ds1500-controller</artifactId>
-    <version>1.6.0</version>
+    <version>1.7.0</version>
 
     <properties>
         <dwp.secure-sockets.version>1.7.0</dwp.secure-sockets.version>
@@ -37,8 +37,8 @@
         <google.guava.version>30.1-jre</google.guava.version>
         <cucumber-core.version>1.2.4</cucumber-core.version>
         <cucumber-jvm.version>1.0.3</cucumber-jvm.version>
-        <jetty.version>9.4.39.v20210325</jetty.version>
-        <dropwizard.version>2.0.21</dropwizard.version>
+        <jetty.version>9.4.42.v20210604</jetty.version>
+        <dropwizard.version>2.0.23</dropwizard.version>
         <commons-io.version>2.8.0</commons-io.version>
         <wiremock.version>2.6.0</wiremock.version>
         <mockito.version>1.10.19</mockito.version>
