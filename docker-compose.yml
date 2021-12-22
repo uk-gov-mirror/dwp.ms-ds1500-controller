@@ -4,10 +4,14 @@ networks:
 services:
   localstack:
     container_name: localstack
-    image: localstack/localstack:latest
+    image: localstack/localstack:0.12.16
     environment:
       SERVICES: ${LOCALSTACK_SERVICES}
       HOSTNAME_EXTERNAL: ${LOCALSTACK_HOSTNAME}
+    expose:
+      - 4566
+    ports:
+      - "4566:4566"
     networks:
       - test
 
