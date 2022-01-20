@@ -1,3 +1,15 @@
+<a name="1.7.2"></a>
+# 1.7.2 (2022-01-20)
+
+**vulnerability:** update log4j to 2.17.1 ([389b0d8a](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/commit/389b0d8a/))
+
+
+<a name="1.7.1"></a>
+# 1.7.1 (2021-12-23)
+
+**vulnerability:** update log4j to 2.17.0 ([9d38b0e](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/commit/9d38b0e/))
+**vulnerability:** update dropwizard to 2.0.28 ([d7697ca](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/commit/d7697ca/)) 
+
 <a name="1.7.0"></a>
 # 1.7.0 (2021-07-02)
 

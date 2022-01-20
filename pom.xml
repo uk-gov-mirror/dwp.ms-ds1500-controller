@@ -6,15 +6,15 @@
 
     <groupId>uk.gov.dwp.health.ds1500</groupId>
     <artifactId>ms-ds1500-controller</artifactId>
-    <version>1.7.1</version>
+    <version>1.7.2</version>
 
     <properties>
-        <dwp.secure-sockets.version>1.7.0</dwp.secure-sockets.version>
-        <dwp.securestrings.version>1.5.3</dwp.securestrings.version>
-        <dwp.encoded-log.version>2.0.4</dwp.encoded-log.version>
+        <dwp.secure-sockets.version>1.8.0-ebebb8d5</dwp.secure-sockets.version>
+        <dwp.securestrings.version>1.6.0-6ce91523</dwp.securestrings.version>
+        <dwp.encoded-log.version>2.2.0-3321520b</dwp.encoded-log.version>
         <dwp.drsinteg.version>1.6.0</dwp.drsinteg.version>
         <dwp.postcode.version>1.1.0</dwp.postcode.version>
-        <dwp.events.version>2.2.0-d810b3e5</dwp.events.version>
+        <dwp.events.version>2.3.0-5de751dd</dwp.events.version>
         <dwp.crypto.version>2.1.0-14489011</dwp.crypto.version>
         <dwp.nino.version>1.2.2</dwp.nino.version>
         <dwp.vinfo.version>1.0.0-3c2add75</dwp.vinfo.version>
@@ -30,7 +30,7 @@
         <plugin.spotbugs.version>4.0.0</plugin.spotbugs.version>
         <doxia.version>1.8</doxia.version>
 
-        <log4j.version>2.17.0</log4j.version>
+        <log4j.version>2.17.1</log4j.version>
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javax.activation.version>1.1.1</javax.activation.version>
