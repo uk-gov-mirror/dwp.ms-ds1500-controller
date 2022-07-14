@@ -1,13 +1,13 @@
 include:
     #.pre
     - project: 'dwp/engineering/pipeline-fragments/credential-check'
-      ref: 2-1-0
+      ref: 2-2-0
       file: 'ci-include-credential-check.yml'
     - project: 'dwp/engineering/pipeline-fragments/fragment-version-check'
       ref: 2-3-0
       file: 'ci-include-fragment-version-check.yml'
     - project: 'dwp/engineering/pipeline-fragments/required-fragment-check'
-      ref: 2-5-0
+      ref: 2-7-0
       file: 'ci-include-required-fragment-check.yml'
     #update-version
     - project: 'dwp/engineering/pipeline-fragments/update-semver'
@@ -15,13 +15,13 @@ include:
       file: 'ci-include-update-semver.yml'
     #code-quality
     - project: 'dwp/engineering/pipeline-fragments/gitleaks'
-      ref: 2-1-5
+      ref: 2-2-0
       file: 'ci-include-gitleaks.yml'
     - project: 'dwp/engineering/pipeline-fragments/shell-check'
-      ref: 3-1-0
+      ref: 3-1-1
       file: 'ci-include-shell-check.yml'
     - project: 'dwp/engineering/pipeline-fragments/todo-checker'
-      ref: 2-1-0
+      ref: 2-1-1
       file: 'ci-include-todo-checker.yml'
     - project: 'dwp/engineering/pipeline-fragments/maven-checkstyle-lint'
       ref: 3-2-0
@@ -34,7 +34,7 @@ include:
       ref: 3-3-0
       file: 'ci-include-maven-api-test.yml'
     - project: 'dwp/engineering/pipeline-fragments/docker-compose-run'
-      ref: 3-1-0
+      ref: 3-2-0
       file: 'ci-include-docker-compose-run.yml'
     #application-build
     - project: 'dwp/engineering/pipeline-fragments/maven-api-build'
@@ -48,7 +48,7 @@ include:
       ref: 3-1-0
       file: 'ci-include-maven-api-spotbugs.yml'
     - project: 'dwp/engineering/pipeline-fragments/sonarqube'
-      ref: 4-2-1
+      ref: 4-3-0
       file: 'ci-include-sonar-scanner.yml'
     - project: 'dwp/engineering/pipeline-fragments/maven-dependency-version-check'
       ref: 2-1-0
@@ -59,21 +59,21 @@ include:
       file: 'ci-include-maven-api-site.yml'
     #image-build
     - project: 'dwp/engineering/pipeline-fragments/docker-build'
-      ref: 3-2-0
+      ref: 3-4-1
       file: 'ci-include-docker-build.yml'
     #container-image-test
     - project: 'dwp/engineering/pipeline-fragments/sast-container-check'
-      ref: 2-4-0
+      ref: 2-6-1
       file: 'ci-include-sast-container-check.yml'
     - project: 'dwp/engineering/pipeline-fragments/trivy-container-check'
-      ref: 2-4-1
+      ref: 2-7-0
       file: 'ci-include-trivy-container-check.yml'
     - project: 'dwp/engineering/pipeline-fragments/container-structure-test'
-      ref: 2-1-0
+      ref: 2-3-1
       file: 'ci-include-container-structure-test.yml'
     #image-push
     - project: 'dwp/engineering/pipeline-fragments/push-to-ecr'
-      ref: 4-2-1
+      ref: 4-3-0
       file: 'ci-include-push-to-ecr.yml'
     #tactical-push-publish
     - project: 'dwp/engineering/pipeline-fragments/tactical-push'
@@ -81,11 +81,11 @@ include:
       file: 'ci-include-tactical-push.yml'
     #update-project-metadata
     - project: 'dwp/engineering/pipeline-fragments/create-project-badges'
-      ref: 2-0-0
+      ref: 2-1-0
       file: 'ci-include-create-project-badges.yml'
     #pages
     - project: 'dwp/engineering/pipeline-fragments/pages-tech-docs'
-      ref: 2-0-1
+      ref: 2-1-0
       file: 'ci-include-pages_tech_docs.yml'
     #open-source
     - project: 'dwp/engineering/pipeline-fragments/open-source'
@@ -93,7 +93,7 @@ include:
       file: 'ci-include-open-source.yml'
     #create-schedules
     - project: 'dwp/engineering/pipeline-fragments/schedule-creation'
-      ref: 2-2-0
+      ref: 2-3-0
       file: 'ci-include-schedule-creation.yml'
     #repo-gen
     - project: 'dwp/engineering/pipeline-fragments/apply-repo-config'

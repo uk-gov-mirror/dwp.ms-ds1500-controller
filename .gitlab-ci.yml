@@ -45,10 +45,6 @@ required-fragment-check:
   variables:
     RULESET: MAVEN_CI
 
-trivy-container:
-  variables:
-    ACCEPTABLE_HIGH_FAILURE_COUNT: 6
-
 maven-cucumber:
   extends: .docker-compose-run
   stage: code-test
