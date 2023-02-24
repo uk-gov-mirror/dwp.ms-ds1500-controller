@@ -6,30 +6,30 @@
 
     <groupId>uk.gov.dwp.health.ds1500</groupId>
     <artifactId>ms-ds1500-controller</artifactId>
-    <version>1.8.0</version>
+    <version>1.9.0</version>
 
     <properties>
-        <dwp.secure-sockets.version>1.8.0-ebebb8d5</dwp.secure-sockets.version>
+        <dwp.secure-sockets.version>1.9.0-fd63f993</dwp.secure-sockets.version>
         <dwp.securestrings.version>1.6.0-6ce91523</dwp.securestrings.version>
         <dwp.encoded-log.version>2.2.0-3321520b</dwp.encoded-log.version>
         <dwp.drsinteg.version>1.6.0</dwp.drsinteg.version>
         <dwp.postcode.version>1.1.0</dwp.postcode.version>
-        <dwp.events.version>2.3.0-5de751dd</dwp.events.version>
-        <dwp.crypto.version>2.4.1-330a6965</dwp.crypto.version>
+        <dwp.events.version>4.0.0-5bc46d5a</dwp.events.version>
+        <dwp.crypto.version>2.8.0-e92423de</dwp.crypto.version>
         <dwp.nino.version>1.2.2</dwp.nino.version>
         <dwp.vinfo.version>1.0.0-3c2add75</dwp.vinfo.version>
         <plugin.site.version>3.7.1</plugin.site.version>
-        <plugin.surefire.version>2.22.0</plugin.surefire.version>
-        <plugin.jacoco.version>0.8.2</plugin.jacoco.version>
+        <plugin.surefire.version>2.22.2</plugin.surefire.version>
+        <plugin.jacoco.version>0.8.8</plugin.jacoco.version>
         <plugin.spotbugs.version>4.0.0</plugin.spotbugs.version>
         <doxia.version>1.8</doxia.version>
         <libphonenumber.version>8.12.20</libphonenumber.version>
         <plugin.site.version>3.7.1</plugin.site.version>
         <plugin.surefire.version>2.22.0</plugin.surefire.version>
-        <plugin.jacoco.version>0.8.2</plugin.jacoco.version>
         <plugin.spotbugs.version>4.0.0</plugin.spotbugs.version>
         <doxia.version>1.8</doxia.version>
         <plugin.spring-boot.version>2.6.6</plugin.spring-boot.version>
+        <snakeyaml.version>1.33</snakeyaml.version>
 
         <log4j.version>2.17.1</log4j.version>
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
@@ -38,22 +38,24 @@
         <google.guava.version>30.1-jre</google.guava.version>
         <cucumber-core.version>1.2.4</cucumber-core.version>
         <cucumber-jvm.version>1.0.3</cucumber-jvm.version>
-        <jetty.version>9.4.44.v20210927</jetty.version>
-        <dropwizard.version>2.0.29</dropwizard.version>
+        <dropwizard.version>2.1.4</dropwizard.version>
         <commons-io.version>2.8.0</commons-io.version>
         <wiremock.version>2.6.0</wiremock.version>
         <mockito.version>1.10.19</mockito.version>
-        <jackson.version>2.13.2.2</jackson.version>
-        <owasp.version>7.1.1</owasp.version>
+        <jackson.version>2.14.1</jackson.version>
+        <owasp.version>7.4.4</owasp.version>
         <junit.version>4.11</junit.version>
         <jaxb.version>2.3.0</jaxb.version>
 
         <org.testcontainers.version>1.12.3</org.testcontainers.version>
-        <aws.sqs.version>1.12.241</aws.sqs.version>
-        <aws.sns.version>1.12.241</aws.sns.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -105,16 +107,6 @@
             <version>${libphonenumber.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-sqs</artifactId>
-            <version>${aws.sqs.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-sns</artifactId>
-            <version>${aws.sns.version}</version>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
@@ -150,46 +142,11 @@
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
             <version>${dropwizard.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.glassfish.web</groupId>
-                    <artifactId>javax.el</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.el</groupId>
-                    <artifactId>javax.el-api</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-client</artifactId>
             <version>${dropwizard.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-security</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-xml</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlets</artifactId>
-            <version>${jetty.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

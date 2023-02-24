@@ -3,17 +3,46 @@
     <suppress>
         <notes>
             <![CDATA[
-            file name: amqp-client-5.0.0.jar will suppress until messaging-utility is replaced with message-broker-integration
+            file name: bc-fips-1.0.2.3.jar suppress until maintainer has addressed
             ]]>
         </notes>
-        <cve>CVE-2018-11087</cve>
+        <packageUrl regex="true">^pkg:maven/org\.bouncycastle/bc\-fips@.*$</packageUrl>
+        <cve>CVE-2022-45146</cve>
     </suppress>
     <suppress>
         <notes>
             <![CDATA[
-            file name: jersey-common-2.33.jar will suppress until dropwizard is updated to latest minor version v2.1.0
+            file name: snakeyaml-1.33.jar suppress until maintainer has addressed
             ]]>
         </notes>
-        <cve>CVE-2021-28168</cve>
+        <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml@.*$</packageUrl>
+        <cve>CVE-2022-1471</cve>
+    </suppress>
+    <suppress>
+        <notes>
+            <![CDATA[
+            file name: hk2-utils-2.6.1.jar Suppressed until Dropwizard version is updated
+            ]]>
+        </notes>
+        <packageUrl regex="true">^pkg:maven/org\.glassfish\.hk2/hk2\-utils@.*$</packageUrl>
+        <cve>CVE-2021-4277</cve>
+    </suppress>
+    <suppress>
+        <notes>
+            <![CDATA[
+            file name: snakeyaml-1.33.jar Suppressed until maintainer addresses the vulnerability.
+            ]]>
+        </notes>
+        <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml@.*$</packageUrl>
+        <cve>CVE-2022-3064</cve>
+    </suppress>
+    <suppress>
+        <notes>
+            <![CDATA[
+            file name: snakeyaml-1.33.jar Suppressed until maintainer addresses the vulnerability.
+            ]]>
+        </notes>
+        <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml@.*$</packageUrl>
+        <cve>CVE-2021-4235</cve>
     </suppress>
 </suppressions>

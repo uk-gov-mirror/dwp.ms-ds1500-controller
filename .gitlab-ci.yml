@@ -31,7 +31,7 @@ variables:
   BUILD_TYPE: "MAVEN"
   MAVEN_IMAGE: "maven:3-jdk-11"
   MVN_OPTS: "-DLOG_LEVEL=INFO"
-  MVN_CLI_OPTS: "-Dhttp.proxyHost=proxy.local.dwpcloud.uk -Dhttp.proxyPort=3128 -Dhttp.nonProxyHosts='localhost|docker|127.0.0.1|localstack' -Dhttps.proxyHost=proxy.local.dwpcloud.uk -Dhttps.proxyPort=3128 -Dhttps.nonProxyHosts='localhost|docker|127.0.0.1|localstack' --batch-mode"
+  MVN_CLI_OPTS: "--batch-mode"
   # Tactical
   DEV_BUCKET_URL: "s3://uk.gov.dwp.deploy-artefacts"
   DOCKER_NEXUS_COMPONENT: "controller"

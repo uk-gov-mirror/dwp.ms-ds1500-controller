@@ -17,7 +17,6 @@ import uk.gov.dwp.health.ds1500controller.domain.exceptions.InvalidJsonException
 import uk.gov.dwp.health.ds1500controller.domain.exceptions.PdfRetrievalError;
 import uk.gov.dwp.health.ds1500controller.utils.PdfRetriever;
 import uk.gov.dwp.health.messageq.amazon.sns.MessagePublisher;
-import uk.gov.dwp.health.messageq.exceptions.EventsManagerException;
 import uk.gov.dwp.health.messageq.items.event.EventMessage;
 import uk.gov.dwp.health.messageq.items.event.MetaData;
 import uk.gov.dwp.regex.InvalidNinoException;
@@ -109,9 +108,33 @@ public class Ds1500ControllerResource {
       LOG.error("JSON validation failed :: {}", e.getMessage());
       LOG.debug(e.getClass().getName(), e);
 
-    } catch (EventsManagerException e) {
+    } catch (EventsMessageException e) {
       response = Response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(ERROR_MSG).build();
-      LOG.error("Publishing events manager exception :: {}", e.getMessage());
+      LOG.error("Publishing events message exception :: {}", e.getMessage());
+      LOG.debug(e.getClass().getName(), e);
+    } catch (CryptoException e) {
+      response = Response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(ERROR_MSG).build();
+      LOG.error("Crypto exception :: {}", e.getMessage());
+      LOG.debug(e.getClass().getName(), e);
+
+    } catch (InvocationTargetException e) {
+      response = Response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(ERROR_MSG).build();
+      LOG.error("Invocation target exception :: {}", e.getMessage());
+      LOG.debug(e.getClass().getName(), e);
+
+    } catch (InstantiationException e) {
+      response = Response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(ERROR_MSG).build();
+      LOG.error("Instantiation exception :: {}", e.getMessage());
+      LOG.debug(e.getClass().getName(), e);
+
+    } catch (NoSuchMethodException e) {
+      response = Response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(ERROR_MSG).build();
+      LOG.error("No such method exception :: {}", e.getMessage());
+      LOG.debug(e.getClass().getName(), e);
+
+    } catch (IllegalAccessException e) {
+      response = Response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(ERROR_MSG).build();
+      LOG.error("Illegal access exception :: {}", e.getMessage());
       LOG.debug(e.getClass().getName(), e);
     }
 
@@ -166,7 +189,9 @@ public class Ds1500ControllerResource {
     return response;
   }
 
-  private void publishMessageToSns(EventMessage messageQueueEvent) throws EventsManagerException {
+  private void publishMessageToSns(EventMessage messageQueueEvent) throws EventsMessageException,
+          CryptoException, JsonProcessingException, InvocationTargetException,
+          InstantiationException, NoSuchMethodException, IllegalAccessException {
     try {
 
       LOG.debug(
@@ -187,7 +212,7 @@ public class Ds1500ControllerResource {
         | IllegalAccessException
         | EventsMessageException
         | CryptoException e) {
-      throw new EventsManagerException(e.getMessage());
+      throw e;
     }
   }
 
