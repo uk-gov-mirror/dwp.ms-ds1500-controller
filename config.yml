@@ -11,8 +11,8 @@ server:
 pdfFeeGeneratorUrl: ${PDF_FEE_GENERATOR_URL}
 pdfGeneratorUrl: ${PDF_GENERATOR_URL}
 
-ds1500FeeDownladPdfName: generatedDS1500Fee.pdf
-ds1500DownloadPdfName: generatedDS1500.pdf
+ds1500FeeDownladPdfName: generatedSR1Fee.pdf
+ds1500DownloadPdfName: generatedSR1.pdf
 
 kmsCryptoConfiguration:
   kmsEndpointOverride: ${KMS_ENDPOINT_OVERRIDE:-null}

@@ -51,8 +51,8 @@ public class Ds1500ControllerResourceTest {
     private static final String FEE_JSON_WITH_DOCTORS_NAME = "{\"surname\":null,\"otherNames\":null,\"dateOfBirth\":null,\"nINumber\":null,\"address\":null,\"postcode\":null,\"declarerName\":\"Dr Smith\",\"declarerAddress\":null,\"declarationDate\":null,\"gmcNumber\":0}";
     private static final String DS1500_PDF_FEE_URL = "http://localhost:9090";
     private static final String DS1500_PDF_URL = "http://localhost:9012";
-    private static final String DS1500_FEE_PDF = "generatedDS1500Fee.pdf";
-    private static final String DS1500_PDF = "generatedDS1500.pdf";
+    private static final String DS1500_FEE_PDF = "generatedSR1Fee.pdf";
+    private static final String DS1500_PDF = "generatedSR1.pdf";
     private static final String MSG_TOPIC = "test.exchange";
     private static final String ROUTING_KEY = "routing.key";
     private static final String MSG_SUBJECT = "DS1500";

@@ -1,5 +1,11 @@
-<a name="1.8.0"></a>
-# 1.8.0 (2023-02-23)
+<a name="1.10.0"></a>
+# 1.10.0 (2023-04-03)
+
+* **srel policy changes:** update ds1500 to sr1 ([666d6a60](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/commit/666d6a60/))
+* **versions:** Upgrade message utility versions ([531cfcb3](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/commit/531cfcb3/))
+
+<a name="1.9.0"></a>
+# 1.9.0 (2023-02-23)
 
 **docker:** update dockerfile user ([2019ec5c](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/commit/2019ec5c/))
 

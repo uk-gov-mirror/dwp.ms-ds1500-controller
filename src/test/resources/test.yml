@@ -11,8 +11,8 @@ server:
 pdfFeeGeneratorUrl: http://localhost:9990/
 pdfGeneratorUrl: http://localhost:9015/
 
-ds1500FeeDownladPdfName: generatedDS1500Fee.pdf
-ds1500DownloadPdfName: generatedDS1500.pdf
+ds1500FeeDownladPdfName: generatedSR1Fee.pdf
+ds1500DownloadPdfName: generatedSR1.pdf
 
 kmsCryptoConfiguration:
   kmsEndpointOverride: http://localstack:4566

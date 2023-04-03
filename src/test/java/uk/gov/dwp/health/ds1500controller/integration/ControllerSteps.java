@@ -36,6 +36,7 @@ import uk.gov.dwp.health.messageq.EventConstants;
 import uk.gov.dwp.health.messageq.amazon.items.AmazonConfigBase;
 import uk.gov.dwp.health.messageq.amazon.items.messages.SnsMessageClassItem;
 import uk.gov.dwp.health.messageq.amazon.utils.AmazonQueueUtilities;
+import uk.gov.dwp.health.messageq.items.event.EventMessage;
 
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -169,8 +170,8 @@ public class ControllerSteps {
     public void startServer() throws CryptoException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, IOException {
 
         // create local properties to negate KMS from needing to access Metadata Service for IAM role privs
-        System.setProperty("aws.accessKeyId", "this_is_my_system_property_key");
-        System.setProperty("aws.secretKey", "abcd123456789");
+        System.setProperty("aws.accessKeyId", "dummyaccess");
+        System.setProperty("aws.secretKey", "dummysecret");
 
         AmazonConfigBase snsConfig = new AmazonConfigBase();
         snsConfig.setEndpointOverride("http://localstack:4566");

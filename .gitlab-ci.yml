@@ -1,3 +1,8 @@
+default:
+  tags:
+    - docker
+  image: alpine
+
 include:
   - local: "/gitlab-ci/includes.yml"
 
@@ -12,7 +17,6 @@ stages:
   - container-image-test
   - component-test
   - image-push
-  - tactical-push-publish
   - update-project-metadata
   - generate-api-docs
   - pages
@@ -32,13 +36,6 @@ variables:
   MAVEN_IMAGE: "maven:3-jdk-11"
   MVN_OPTS: "-DLOG_LEVEL=INFO"
   MVN_CLI_OPTS: "--batch-mode"
-  # Tactical
-  DEV_BUCKET_URL: "s3://uk.gov.dwp.deploy-artefacts"
-  DOCKER_NEXUS_COMPONENT: "controller"
-  HTDS_DOCKER_PULL_REPO: "nexus.service.health-dev.dwpcloud.uk:5000"
-  HTDS_DOCKER_PUSH_REPO: "nexus.service.health-dev.dwpcloud.uk:5001"
-  LOCAL_COMPONENT_NAME: "controller"
-  LOCAL_PROJECT_NAME: "ds1500"
   GITHUB_REPO_NAME: "ms-ds1500-controller" # Used for open-source fragment
 
 required-fragment-check:

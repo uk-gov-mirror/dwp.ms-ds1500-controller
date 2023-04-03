@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
 
 @SuppressWarnings("java:S2637") // NotNull constraint - class is populated by serialisation
 public class Ds1500ControllerConfiguration extends Configuration {
-  private SecureStrings cipher = new SecureStrings();
+  private SecureStrings cipher;
 
   @NotNull
   @JsonProperty("snsTopicName")
@@ -87,6 +87,7 @@ public class Ds1500ControllerConfiguration extends Configuration {
   public Ds1500ControllerConfiguration()
       throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
     // required to support 1.5.3+ of secure-strings
+    cipher = new SecureStrings();
   }
 
   public boolean isApplicationInfoEnabled() {

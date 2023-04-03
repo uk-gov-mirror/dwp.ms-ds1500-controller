@@ -99,9 +99,10 @@ public class MetadataBuilderTest {
         String otherNames = "Man";
         String postcode = "LS1 1AR";
         String nINumber = "AA370773";
+        String nISuffix = "A";
         String dateOfBirth = "16/07/1943";
         int dateOfBirthAsNumber = 19430716;
-        DSForm form = buildForm(surname, otherNames, postcode, nINumber, dateOfBirth);
+        DSForm form = buildForm(surname, otherNames, postcode, nINumber + nISuffix, dateOfBirth);
 
         Ds1500Metadata payload = builderUnderTest.buildPayload(form, LocalDate.of(2016, 7, 25));
 
@@ -120,7 +121,7 @@ public class MetadataBuilderTest {
         NinoValidator ninoValue = new NinoValidator(metadata.get("nino").get("ninoBody").textValue(), metadata.get("nino").get("ninoSuffix").textValue());
         assertThat(metadata.get("nino").getClass(), not(equalTo(NullNode.class)));
         assertThat(ninoValue.getNinoBody(), is(equalTo(nINumber)));
-        assertThat(ninoValue.getNinoSuffix(), is(equalTo("")));
+        assertThat(ninoValue.getNinoSuffix(), is(equalTo(nISuffix)));
         validateClaimRef(payload.getClaimRef());
     }
 

@@ -112,6 +112,7 @@ public class Ds1500ControllerResource {
       response = Response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(ERROR_MSG).build();
       LOG.error("Publishing events message exception :: {}", e.getMessage());
       LOG.debug(e.getClass().getName(), e);
+
     } catch (CryptoException e) {
       response = Response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(ERROR_MSG).build();
       LOG.error("Crypto exception :: {}", e.getMessage());
@@ -136,6 +137,7 @@ public class Ds1500ControllerResource {
       response = Response.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(ERROR_MSG).build();
       LOG.error("Illegal access exception :: {}", e.getMessage());
       LOG.debug(e.getClass().getName(), e);
+
     }
 
     return response;
