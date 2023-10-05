@@ -1,3 +1,11 @@
+<a name="1-10-1"></a>
+# 1-10-1 (2023-10-05)
+
+* chore: update vulnerabilities ([905ea40](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/905ea40))
+* chore: add project metadata [ci skip] ([916d146](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/916d146))
+* chore: update to java 17 ([29bbde9](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/29bbde9))
+* chore: update dependency junit to v4.13.1 ([f8bae27](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/f8bae27))
+
 <a name="1.10.0"></a>
 # 1.10.0 (2023-04-03)
 
@@ -111,6 +119,3 @@ Add null defaults to ssl env vars ([ed4fd351](https://gitlab.com/dwp/health/ds15
 * **build:** adding build files and changing the name of the service to match HealthPDU standards ([1be2051](https://gitlab.com/dwp/SecureComms/ds1500-controller/commit/1be2051))
 * **logger:** update DwpEncodedLogger with LoggerFactory for log binding ([a30d1e9](https://gitlab.com/dwp/SecureComms/ds1500-controller/commit/a30d1e9))
 * **versions:** updated dwp dependency version and dropwizard, update configuration and suppress bootstrap logger for dropwiz ([07b515c](https://gitlab.com/dwp/SecureComms/ds1500-controller/commit/07b515c))
-
-
-

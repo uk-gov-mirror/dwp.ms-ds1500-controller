@@ -1,0 +1,19 @@
+$schema: https://gitlab.com/dwp/secure-development/schema/project-metadata/-/raw/v1.0.0/schema/project-metadata.json
+
+schema_version: 1.0.0
+
+project:
+  - project_id: 27293902
+    component_name: ms-ds1500-controller
+
+    version: 1.10.1
+
+    last_verified:
+      date: "2023-10-05"
+      name: "@stephen-nimako"
+
+    tags:
+      payments: false
+      personally_identifying_information: true
+
+    cmdb_id: e86de9ec6f20cb80a16b7e952e3ee494

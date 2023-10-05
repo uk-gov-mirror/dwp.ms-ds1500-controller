@@ -1,16 +1,13 @@
 package uk.gov.dwp.health.ds1500controller.integration;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
-import org.testcontainers.containers.DockerComposeContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
 import uk.gov.dwp.health.ds1500controller.application.Ds1500ControllerApplication;
 import uk.gov.dwp.health.ds1500controller.application.Ds1500ControllerConfiguration;
 
-import java.io.File;
 
 import static io.dropwizard.testing.ResourceHelpers.resourceFilePath;
 

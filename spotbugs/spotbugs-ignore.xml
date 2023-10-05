@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <Match>
+        <Class name="uk.gov.dwp.health.ds1500controller.Ds1500ControllerResource"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="uk.gov.dwp.health.ds1500controller.application.Ds1500ControllerConfiguration"/>
+        <Bug pattern="EI_EXPOSE_REP" />
+    </Match>
+    <Match>
+        <Class name="uk.gov.dwp.health.ds1500controller.domain.Ds1500Metadata"/>
+        <Bug pattern="EI_EXPOSE_REP2" />
+    </Match>
+    <Match>
+        <Class name="uk.gov.dwp.health.ds1500controller.domain.Ds1500Metadata"/>
+        <Bug pattern="EI_EXPOSE_REP" />
+    </Match>
+</FindBugsFilter>

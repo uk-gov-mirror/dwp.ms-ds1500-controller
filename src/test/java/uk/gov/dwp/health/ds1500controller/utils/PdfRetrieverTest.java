@@ -7,7 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.dwp.health.ds1500controller.application.Ds1500ControllerConfiguration;
 import uk.gov.dwp.health.ds1500controller.domain.exceptions.PdfRetrievalError;
 import uk.gov.dwp.tls.TLSConnectionBuilder;

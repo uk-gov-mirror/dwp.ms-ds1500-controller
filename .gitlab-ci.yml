@@ -33,7 +33,7 @@ variables:
   REPO_PATTERN: "V3 CI"
   # Config
   BUILD_TYPE: "MAVEN"
-  MAVEN_IMAGE: "maven:3-jdk-11"
+  MAVEN_IMAGE: "maven:3-amazoncorretto-17"
   MVN_OPTS: "-DLOG_LEVEL=INFO"
   MVN_CLI_OPTS: "--batch-mode"
   GITHUB_REPO_NAME: "ms-ds1500-controller" # Used for open-source fragment

@@ -3,13 +3,14 @@ package uk.gov.dwp.health.ds1500controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.ws.rs.core.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.dwp.health.crypto.exception.CryptoException;
 import uk.gov.dwp.health.crypto.exceptions.EventsMessageException;
 import uk.gov.dwp.health.ds1500controller.application.Ds1500ControllerConfiguration;
@@ -22,25 +23,22 @@ import uk.gov.dwp.health.messageq.amazon.sns.MessagePublisher;
 import uk.gov.dwp.health.messageq.items.event.EventMessage;
 import uk.gov.dwp.regex.InvalidNinoException;
 
-import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -103,7 +101,7 @@ public class Ds1500ControllerResourceTest {
         assertThat(post.getStatus(), is(200));
 
         verify(validator).validateAndTranslate(jsonPayload);
-        verify(snsPublish).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), any(Map.class));
+        verify(snsPublish).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), eq(null));
     }
 
     @Test
@@ -122,7 +120,7 @@ public class Ds1500ControllerResourceTest {
         JsonNode jsonNode = new ObjectMapper().readTree(post.getEntity().toString());
         UUID.fromString(jsonNode.get("id").textValue());
 
-        verify(snsPublish).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), any(Map.class));
+        verify(snsPublish).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), eq(null));
     }
 
     @Test
@@ -146,7 +144,7 @@ public class Ds1500ControllerResourceTest {
         assertThat(url.getValue(), is(DS1500_PDF_URL));
         assertThat(post.getStatus(), is(200));
 
-        verifyZeroInteractions(snsPublish);
+        verifyNoInteractions(snsPublish);
     }
 
 
@@ -205,7 +203,7 @@ public class Ds1500ControllerResourceTest {
         assertThat(url.getValue(), is(DS1500_PDF_FEE_URL));
         assertThat(post.getStatus(), is(200));
 
-        verifyZeroInteractions(snsPublish);
+        verifyNoInteractions(snsPublish);
     }
 
 
@@ -247,7 +245,7 @@ public class Ds1500ControllerResourceTest {
         assertThat(url.getValue(), is(DS1500_PDF_FEE_URL));
         assertThat(post.getStatus(), is(200));
 
-        verifyZeroInteractions(snsPublish);
+        verifyNoInteractions(snsPublish);
     }
 
     @Test
@@ -273,13 +271,13 @@ public class Ds1500ControllerResourceTest {
         returnedForm.setDeclarerName("Dr Smith");
         metadata.setBenefitType(99);
 
-        doThrow(new EventsMessageException("Thrown for test purposes")).when(snsPublish).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), any(Map.class));
+        doThrow(new EventsMessageException("Thrown for test purposes")).when(snsPublish).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), eq(null));
         when(metadataBuilder.buildPayload(any(DSForm.class), any(LocalDate.class))).thenReturn(metadata);
         when(validator.validateAndTranslate(jsonPayload)).thenReturn(returnedForm);
 
         Response post = resourceUnderTest.post(jsonPayload);
         assertThat(post.getStatus(), is(500));
-        verify(snsPublish).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), any(Map.class));
+        verify(snsPublish).publishMessageToSnsTopic(eq(true), eq(MSG_TOPIC), eq(MSG_SUBJECT), any(EventMessage.class), eq(null));
     }
 
     @Test
@@ -288,6 +286,6 @@ public class Ds1500ControllerResourceTest {
         when(validator.validateAndTranslate(jsonPayload)).thenThrow(new InvalidJsonException("thrown in test"));
         Response post = resourceUnderTest.post(jsonPayload);
         assertThat(post.getStatus(), is(400));
-        verifyZeroInteractions(snsPublish);
+        verifyNoInteractions(snsPublish);
     }
 }
