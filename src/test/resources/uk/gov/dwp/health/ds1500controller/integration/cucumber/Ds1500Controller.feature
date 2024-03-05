@@ -10,10 +10,10 @@ Feature: DS1500 controller for submissions and pdf download
     And a message is successfully removed from the queue, there were a total of 1 messages on queue "test-queue-1"
     And the message has a correlation id and is a valid DSForm matching the following submission information
       | dateOfBirth         | "15/02/1972"                   |
-      | diagnosisDate       | "05/2015"                      |
+      | diagnosisDate       | "11/05/2015"                      |
+      | specialDate         | "11/05/2015"                      |
       | clinicalFeatures    | "Mr Coupe's clinical features" |
       | nINumber            | "NY921108A"                    |
-      | representative3     | "NW1 3ER"                      |
       | declarerName        | "Dr. Michael Hfuhruhurr"       |
       | declarerPhoneNumber | "0114 258 8520"                |
       | other               | ""                             |
@@ -29,10 +29,10 @@ Feature: DS1500 controller for submissions and pdf download
     And a message is successfully removed from the queue, there were a total of 1 messages on queue "test-queue-2"
     And the message has a correlation id and is a valid DSForm matching the following submission information
       | dateOfBirth         | "15/02/1972"                   |
-      | diagnosisDate       | "05/2015"                      |
+      | diagnosisDate       | "11/05/2015"                      |
+      | specialDate         | "11/05/2015"                      |
       | clinicalFeatures    | "Mr Coupe's clinical features" |
       | nINumber            | "NY921108A"                    |
-      | representative3     | "NW1 3ER"                      |
       | declarerName        | "McMillan Nurse"               |
       | declarerPhoneNumber | "0114 258 8520"                |
       | other               | "Nurse"                        |
@@ -54,10 +54,10 @@ Feature: DS1500 controller for submissions and pdf download
     And a message is successfully removed from the queue, there were a total of 1 messages on queue "test-queue-3"
     And the message has a correlation id and is a valid DSForm matching the following submission information
       | dateOfBirth         | "15/02/1972"                   |
-      | diagnosisDate       | "05/2015"                      |
+      | diagnosisDate       | "11/05/2015"                      |
+      | specialDate         | "11/05/2015"                      |
       | clinicalFeatures    | "Mr Coupe's clinical features" |
       | nINumber            | "NY921108A"                    |
-      | representative3     | "NW1 3ER"                      |
       | declarerName        | "Dr. Michael Hfuhruhurr"       |
       | declarerPhoneNumber | "0114 258 8520"                |
       | other               | ""                             |
@@ -73,10 +73,10 @@ Feature: DS1500 controller for submissions and pdf download
     And a message is successfully removed from the queue, there were a total of 1 messages on queue "test-queue-4"
     And the message has a correlation id and is a valid DSForm matching the following submission information
       | dateOfBirth         | "15/02/1972"                   |
-      | diagnosisDate       | "05/2015"                      |
+      | diagnosisDate       | "11/05/2015"                      |
+      | specialDate         | "11/05/2015"                      |
       | clinicalFeatures    | "Mr Coupe's clinical features" |
       | nINumber            | "NY921108A"                    |
-      | representative3     | "NW1 3ER"                      |
       | declarerName        | "McMillan Nurse"               |
       | declarerPhoneNumber | "0114 258 8520"                |
       | other               | "Nurse"                        |

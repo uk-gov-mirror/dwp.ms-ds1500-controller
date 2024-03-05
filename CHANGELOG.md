@@ -1,3 +1,11 @@
+<a name="1-11-0"></a>
+# 1-11-0 (2024-02-13)
+
+* htf 2905: remove repo gen ([ca08d3a](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/ca08d3a))
+* feature: update document ID ([1a882e5](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/1a882e5))
+* feature: add new postcode field ([13443a6](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/13443a6))
+* feature: date of diagnosis ([41b10e1](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/41b10e1))
+
 <a name="1-10-1"></a>
 # 1-10-1 (2023-10-05)
 

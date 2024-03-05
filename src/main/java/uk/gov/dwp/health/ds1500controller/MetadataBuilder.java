@@ -25,6 +25,7 @@ public class MetadataBuilder {
     metadata.setClassification(0);
     metadata.setDocumentType(1242);
     metadata.setDocumentSource(4);
+    metadata.setLOBCaseID("SR1");
     metadata.setClaimRef(RandomStringUtils.randomAlphanumeric(30));
 
     if (form.getSurname() != null) {

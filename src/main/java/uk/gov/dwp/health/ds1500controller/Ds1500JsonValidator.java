@@ -60,22 +60,18 @@ public class Ds1500JsonValidator {
     form.setDateOfBirth(dateOfBirth);
 
     checkAndSetDiagnosisDate(form, jsonNode);
+    checkAndSetSpecialRulesDate(form, jsonNode);
 
     form.setnINumber(getFieldFromJson(jsonNode, "patientNino"));
     checkNinoIsValid(form);
 
     form.setDiagnosis(getMandatoryFieldFromJson(jsonNode, "diagnosis"));
     form.setOtherDiagnosis(getFieldFromJson(jsonNode, "otherDiagnoses"));
+    form.setDiagnosisAware(getMandatoryFieldFromJson(jsonNode, "diagnosisAware"));
     form.setPatientAware(getMandatoryFieldFromJson(jsonNode, "patientAware"));
-    form.setFormRequestor(getMandatoryFieldFromJson(jsonNode, "formRequester"));
-    form.setRepresentative1(getFieldFromJson(jsonNode, "representativeName"));
-    form.setRepresentative2(getFieldFromJson(jsonNode, "representativeAddress"));
-    form.setRepresentative3(getFieldFromJson(jsonNode, "representativePostcode"));
-    checkRepresentativePostcodeIsValid(form);
 
     form.setClinicalFeatures(getMandatoryFieldFromJson(jsonNode, "clinicalFeatures"));
     form.setTreatment(getMandatoryFieldFromJson(jsonNode, "treatment"));
-    form.setOtherTreatment(getFieldFromJson(jsonNode, "otherIntervention"));
     String declaration = getMandatoryFieldFromJson(jsonNode, "declaration");
     form.setDeclaration(declaration);
 
@@ -83,6 +79,7 @@ public class Ds1500JsonValidator {
 
     form.setDeclarerName(getMandatoryFieldFromJson(jsonNode, "gpName"));
     form.setDeclarerAddress(getMandatoryFieldFromJson(jsonNode, "gpAddress"));
+    form.setDeclarerPostcode(getMandatoryFieldFromJson(jsonNode, "gpPostcode"));
     form.setDeclarerPhoneNumber(getMandatoryFieldFromJson(jsonNode, "gpPhone"));
     checkDeclarerPhoneNumberIsValid(form);
 
@@ -100,18 +97,8 @@ public class Ds1500JsonValidator {
       form.setGmcNumber(Integer.parseInt(getMandatoryFieldFromJson(jsonNode, "gmcNumber")));
       validateGmcNumber(form);
       form.setOther("");
-    } else {
+    } else if (!"Specialist nurse".equals(declaration)) {
       form.setOther(getMandatoryFieldFromJson(jsonNode, "declarationAdditionalDetail"));
-    }
-  }
-
-  private void checkRepresentativePostcodeIsValid(DSForm form) throws InvalidJsonException {
-    if (form.getRepresentative3() != null
-        && !form.getRepresentative3().isEmpty()
-        && !PostCodeValidator.validateInput(form.getRepresentative3())) {
-      throw new InvalidJsonException(
-          String.format(
-              "'representativePostcode' fails validation : %s", form.getRepresentative3()));
     }
   }
 
@@ -174,23 +161,55 @@ public class Ds1500JsonValidator {
 
   private void checkAndSetDiagnosisDate(DSForm form, JsonNode jsonNode)
       throws InvalidJsonException {
+    String dayField = getMandatoryFieldFromJson(jsonNode, "dateOfDiagnosis-day");
     String yearField = getMandatoryFieldFromJson(jsonNode, "dateOfDiagnosis-year");
     String monthField = getMandatoryFieldFromJson(jsonNode, "dateOfDiagnosis-month");
-    String diagnosisDate = monthField + "/" + yearField;
+    String diagnosisDate = dayField + "/" + monthField + "/" + yearField;
 
-    String buildDateForChecking = "01/" + monthField + "/" + yearField;
+    String buildDateForChecking = dayField + "/" + monthField + "/" + yearField;
     checkValidDate(buildDateForChecking);
 
+    String birthDay = getMandatoryFieldFromJson(jsonNode, "patientDateOfBirth-day");
     String birthMonth = getMandatoryFieldFromJson(jsonNode, "patientDateOfBirth-month");
     String birthYear = getMandatoryFieldFromJson(jsonNode, "patientDateOfBirth-year");
 
     if ((Integer.parseInt(birthYear) > Integer.parseInt(yearField))
         || ((Integer.valueOf(yearField).equals(Integer.valueOf(birthYear)))
-            && (Integer.parseInt(monthField) < Integer.parseInt(birthMonth)))) {
+            && (Integer.parseInt(monthField) < Integer.parseInt(birthMonth)))
+        || (Integer.valueOf(yearField).equals(Integer.valueOf(birthYear))
+            && Integer.valueOf(monthField).equals(Integer.valueOf(birthMonth))
+            && Integer.valueOf(birthDay) > Integer.valueOf(dayField))) {
       throw new InvalidJsonException("Date of diagnosis cannot be earlier than Patient DOB");
     }
 
     form.setDiagnosisDate(diagnosisDate);
+  }
+
+  private void checkAndSetSpecialRulesDate(DSForm form, JsonNode jsonNode)
+          throws InvalidJsonException {
+    String yearField = getMandatoryFieldFromJson(jsonNode, "dateOfSpecialRules-year");
+    String monthField = getMandatoryFieldFromJson(jsonNode, "dateOfSpecialRules-month");
+    String dayField = getMandatoryFieldFromJson(jsonNode, "dateOfSpecialRules-day");
+    String specialRulesDate = dayField + "/" + monthField + "/" + yearField;
+
+    String buildDateForChecking = dayField + "/" + monthField + "/" + yearField;
+    checkValidDate(buildDateForChecking);
+
+    String diagnosisDay = getMandatoryFieldFromJson(jsonNode, "dateOfDiagnosis-day");
+    String diagnosisYear = getMandatoryFieldFromJson(jsonNode, "dateOfDiagnosis-year");
+    String diagnosisMonth = getMandatoryFieldFromJson(jsonNode, "dateOfDiagnosis-month");
+
+    if ((Integer.parseInt(diagnosisYear) > Integer.parseInt(yearField))
+            || ((Integer.valueOf(yearField).equals(Integer.valueOf(diagnosisYear)))
+            && (Integer.parseInt(monthField) < Integer.parseInt(diagnosisMonth)))
+            || (Integer.valueOf(yearField).equals(Integer.valueOf(diagnosisYear))
+            && Integer.valueOf(monthField).equals(Integer.valueOf(diagnosisMonth))
+            && Integer.valueOf(diagnosisDay) > Integer.valueOf(dayField))) {
+      throw new
+           InvalidJsonException("Date of special rules cannot be earlier than Date of diagnosis");
+    }
+
+    form.setSpecialDate(specialRulesDate);
   }
 
   private void checkDeclarerPhoneNumberIsValid(DSForm form) throws InvalidJsonException {

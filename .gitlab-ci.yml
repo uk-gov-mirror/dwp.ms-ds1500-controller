@@ -22,7 +22,6 @@ stages:
   - pages
   - open-source
   - create-schedules
-  - repo-gen
 
 variables:
   # Product

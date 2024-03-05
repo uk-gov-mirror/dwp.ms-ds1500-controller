@@ -301,6 +301,7 @@ public class MetadataBuilderTest {
         checkFieldValue(node, "classification", 0);
         checkFieldValue(node, "documentType", 1242);
         checkFieldValue(node, "documentSource", 4);
+        checkFieldValue(node, "lobcaseID", "SR1");
     }
 
     private void checkFieldValue(JsonNode node, String metaDataFieldName, int expectedValue) {

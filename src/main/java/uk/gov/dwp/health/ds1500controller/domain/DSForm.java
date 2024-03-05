@@ -33,31 +33,22 @@ public class DSForm {
   private String otherDiagnosis;
 
   @JsonView(DSForm.class)
-  private String patientAware;
+  private String diagnosisAware;
 
   @JsonView(DSForm.class)
-  private String formRequestor;
+  private String patientAware;
 
   @JsonView(DSForm.class)
   private String diagnosisDate;
 
   @JsonView(DSForm.class)
-  private String representative1;
-
-  @JsonView(DSForm.class)
-  private String representative2;
-
-  @JsonView(DSForm.class)
-  private String representative3;
+  private String specialDate;
 
   @JsonView(DSForm.class)
   private String clinicalFeatures;
 
   @JsonView(DSForm.class)
   private String treatment;
-
-  @JsonView(DSForm.class)
-  private String otherTreatment;
 
   @JsonView(DSForm.class)
   private String declaration;
@@ -73,6 +64,9 @@ public class DSForm {
 
   @JsonView({DSForm.class, Views.DsFeeForm.class})
   private String declarerAddress;
+
+  @JsonView({DSForm.class, Views.DsFeeForm.class})
+  private String declarerPostcode;
 
   @JsonView({DSForm.class, Views.DsFeeForm.class})
   private String declarationDate;
@@ -116,16 +110,8 @@ public class DSForm {
     return diagnosisDate;
   }
 
-  public String getRepresentative1() {
-    return representative1;
-  }
-
-  public String getRepresentative2() {
-    return representative2;
-  }
-
-  public String getRepresentative3() {
-    return representative3;
+  public String getSpecialDate() {
+    return specialDate;
   }
 
   public String getClinicalFeatures() {
@@ -134,10 +120,6 @@ public class DSForm {
 
   public String getTreatment() {
     return treatment;
-  }
-
-  public String getOtherTreatment() {
-    return otherTreatment;
   }
 
   public String getOther() {
@@ -156,16 +138,20 @@ public class DSForm {
     return declarerAddress;
   }
 
+  public String getDeclarerPostcode() {
+    return declarerPostcode;
+  }
+
   public String getDeclarationDate() {
     return declarationDate;
   }
 
-  public String getPatientAware() {
-    return patientAware;
+  public String getDiagnosisAware() {
+    return diagnosisAware;
   }
 
-  public String getFormRequestor() {
-    return formRequestor;
+  public String getPatientAware() {
+    return patientAware;
   }
 
   public String getDeclaration() {
@@ -204,28 +190,20 @@ public class DSForm {
     this.otherDiagnosis = otherDiagnosis;
   }
 
-  public void setPatientAware(String patientAware) {
-    this.patientAware = patientAware;
+  public void setDiagnosisAware(String diagnosisAware) {
+    this.diagnosisAware = diagnosisAware;
   }
 
-  public void setFormRequestor(String formRequestor) {
-    this.formRequestor = formRequestor;
+  public void setPatientAware(String patientAware) {
+    this.patientAware = patientAware;
   }
 
   public void setDiagnosisDate(String diagnosisDate) {
     this.diagnosisDate = diagnosisDate;
   }
 
-  public void setRepresentative1(String representative1) {
-    this.representative1 = representative1;
-  }
-
-  public void setRepresentative2(String representative2) {
-    this.representative2 = representative2;
-  }
-
-  public void setRepresentative3(String representative3) {
-    this.representative3 = representative3;
+  public void setSpecialDate(String specialDate) {
+    this.specialDate = specialDate;
   }
 
   public void setClinicalFeatures(String clinicalFeatures) {
@@ -234,10 +212,6 @@ public class DSForm {
 
   public void setTreatment(String treatment) {
     this.treatment = treatment;
-  }
-
-  public void setOtherTreatment(String otherTreatment) {
-    this.otherTreatment = otherTreatment;
   }
 
   public void setDeclaration(String declaration) {
@@ -258,6 +232,10 @@ public class DSForm {
 
   public void setDeclarerAddress(String declarerAddress) {
     this.declarerAddress = declarerAddress;
+  }
+
+  public void setDeclarerPostcode(String declarerPostcode) {
+    this.declarerPostcode = declarerPostcode;
   }
 
   public void setDeclarationDate(String declarationDate) {

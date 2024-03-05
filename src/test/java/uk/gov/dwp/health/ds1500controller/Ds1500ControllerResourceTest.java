@@ -45,8 +45,8 @@ import static org.mockito.Mockito.when;
 @SuppressWarnings("squid:S1192") // string literals allowed
 public class Ds1500ControllerResourceTest {
 
-    private static final String MAIN_JSON_WITH_DOCTORS_NAME = "{\"surname\":null,\"otherNames\":null,\"dateOfBirth\":null,\"nINumber\":null,\"address\":null,\"postcode\":null,\"diagnosis\":null,\"otherDiagnosis\":null,\"patientAware\":null,\"formRequestor\":null,\"diagnosisDate\":null,\"representative1\":null,\"representative2\":null,\"representative3\":null,\"clinicalFeatures\":null,\"treatment\":null,\"otherTreatment\":null,\"declaration\":\"GP\",\"other\":null,\"declarerName\":\"Dr Smith\",\"declarerPhoneNumber\":null,\"declarerAddress\":null,\"declarationDate\":null,\"gmcNumber\":0}";
-    private static final String FEE_JSON_WITH_DOCTORS_NAME = "{\"surname\":null,\"otherNames\":null,\"dateOfBirth\":null,\"nINumber\":null,\"address\":null,\"postcode\":null,\"declarerName\":\"Dr Smith\",\"declarerAddress\":null,\"declarationDate\":null,\"gmcNumber\":0}";
+    private static final String MAIN_JSON_WITH_DOCTORS_NAME = "{\"surname\":null,\"otherNames\":null,\"dateOfBirth\":null,\"nINumber\":null,\"address\":null,\"postcode\":null,\"diagnosis\":null,\"otherDiagnosis\":null,\"diagnosisAware\":null,\"patientAware\":null,\"diagnosisDate\":null,\"specialDate\":null,\"clinicalFeatures\":null,\"treatment\":null,\"declaration\":\"GP\",\"other\":null,\"declarerName\":\"Dr Smith\",\"declarerPhoneNumber\":null,\"declarerAddress\":null,\"declarerPostcode\":null,\"declarationDate\":null,\"gmcNumber\":0}";
+    private static final String FEE_JSON_WITH_DOCTORS_NAME = "{\"surname\":null,\"otherNames\":null,\"dateOfBirth\":null,\"nINumber\":null,\"address\":null,\"postcode\":null,\"declarerName\":\"Dr Smith\",\"declarerAddress\":null,\"declarerPostcode\":null,\"declarationDate\":null,\"gmcNumber\":0}";
     private static final String DS1500_PDF_FEE_URL = "http://localhost:9090";
     private static final String DS1500_PDF_URL = "http://localhost:9012";
     private static final String DS1500_FEE_PDF = "generatedSR1Fee.pdf";

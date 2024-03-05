@@ -7,11 +7,9 @@ import uk.gov.dwp.health.ds1500controller.domain.exceptions.InvalidJsonException
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,22 +35,18 @@ public class Ds1500JsonValidatorTest {
         assertThat("Address line 3 mismatch", dsForm.getAddress()[2], is("Fake"));
         assertThat("PostCode mismatch", dsForm.getPostcode(), is("S2 2RZ"));
         assertThat("DOB mismatch", dsForm.getDateOfBirth(), is("15/02/1972"));
-        assertThat("Diagnosis mismatch", dsForm.getDiagnosisDate(), is("05/2015"));
+        assertThat("Diagnosis mismatch", dsForm.getDiagnosisDate(), is("11/05/2015"));
         assertThat("NINO mismatch", dsForm.getnINumber(), is("AA370773A"));
         assertThat("Diagnosis mismatch", dsForm.getDiagnosis(), is("Extreme grumpiness"));
         assertThat("Other diagnosis mismatch", dsForm.getOtherDiagnosis(), is("Mild allergies to dub step"));
         assertThat("Patient Aware mismatch", dsForm.getPatientAware(), is("Yes"));
-        assertThat("Form requestor mismatch", dsForm.getFormRequestor(), is("Representative"));
-        assertThat("Representative line 1 mismatch", dsForm.getRepresentative1(), is("Representative name"));
-        assertThat("Representative line 2 mismatch", dsForm.getRepresentative2(), is("21 Representative Road"));
-        assertThat("Representative line 3 mismatch", dsForm.getRepresentative3(), is("NW1 3ER"));
         assertThat("Clinical features mismatch", dsForm.getClinicalFeatures(), is("Mr Coupe's clinical features"));
         assertThat("Treatment mismatch", dsForm.getTreatment(), is("Beer, loud music, fluffy kittens"));
-        assertThat("Other treatment mismatch", dsForm.getOtherTreatment(), is("None whatsoever"));
         assertThat("Declaration mismatch", dsForm.getDeclaration(), is("General Practitioner"));
         assertThat("Other declaration person mismatch", dsForm.getOther(), is(""));
         assertThat("Declarer name mismatch", dsForm.getDeclarerName(), is("Dr. Michael Hfuhruhurr"));
         assertThat("Declarer address mismatch", dsForm.getDeclarerAddress(), is("Porter Brook Medical Centre"));
+        assertThat("Declarer postcode mismatch", dsForm.getDeclarerPostcode(), is("IN3 2JJ"));
         assertThat("Declarer phone mismatch", dsForm.getDeclarerPhoneNumber(), is("0114 258 8520"));
         assertThat("Declaration date mismatch", dsForm.getDeclarationDate(), is(not(nullValue())));
         assertThat("GMC Number mismatch", dsForm.getGmcNumber(), is(1234567));
@@ -77,10 +71,10 @@ public class Ds1500JsonValidatorTest {
     @Test
     public void confirmVariousNamesAreInvalidAndThrowsAnException() {
         String[] patientNames = {"\"Emma-Claire.\"",
-            "\"John'  Test\"",
-            "\"John'\"",
-            "\"J. R. R. Tolkien\"",
-            "\"Mr. J. Cale\""
+                "\"John'  Test\"",
+                "\"John'\"",
+                "\"J. R. R. Tolkien\"",
+                "\"Mr. J. Cale\""
         };
 
         for (String patient : patientNames) {
@@ -130,19 +124,6 @@ public class Ds1500JsonValidatorTest {
     }
 
     @Test
-    public void confirmOtherTreatmentIsOptionalAndWillAcceptAnEmptyString() throws InvalidJsonException {
-        DSForm dsform = validator.validateAndTranslate((buildFullRequestWithMissingFieldGPConsultant("otherIntervention", "\"\"")));
-        assertThat("Other intervention mismatch", dsform.getOtherTreatment(), is(""));
-    }
-
-    @Test
-    public void confirmOtherTreatmentIsOptionalAndWillAcceptAnPopulatedString() throws InvalidJsonException {
-        String expectedResult = "this is not blank";
-        DSForm dsform = validator.validateAndTranslate((buildFullRequestWithMissingFieldGPConsultant("otherIntervention", "\"" + expectedResult + "\"")));
-        assertThat("Other intervention mismatch", dsform.getOtherTreatment(), is(expectedResult));
-    }
-
-    @Test
     public void confirmThatABlankNationalInsuranceNumberIsAccepted() throws InvalidJsonException {
         DSForm dsform = validator.validateAndTranslate(buildFullRequestWithMissingFieldGPConsultant("patientNino", null));
         assertThat("NINO mismatch", dsform.getnINumber(), nullValue());
@@ -161,23 +142,27 @@ public class Ds1500JsonValidatorTest {
     @Test
     public void confirmDiagnosisDateInSameMonthAndYearAsDOBIsValid() throws InvalidJsonException {
         String partialJsonResponse = "{\n" +
-            "  \"patientName\":\"Pele\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"15\",\n" +
-            "  \"patientDateOfBirth-month\":\"02\",\n" +
-            "  \"patientDateOfBirth-year\":\"1972\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"02\",\n" +
-            "  \"dateOfDiagnosis-year\":\"1972\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"15\",\n" +
+                "  \"patientDateOfBirth-month\":\"02\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"16\",\n" +
+                "  \"dateOfDiagnosis-month\":\"02\",\n" +
+                "  \"dateOfDiagnosis-year\":\"1972\",\n" +
+                "  \"dateOfSpecialRules-day\":\"17\",\n" +
+                "  \"dateOfSpecialRules-month\":\"02\",\n" +
+                "  \"dateOfSpecialRules-year\":\"1972\",\n" +
+                getReponseForOtherDiagnosesOnwards();
         DSForm dsForm = validator.validateAndTranslate(partialJsonResponse);
-        assertThat(dsForm.getDiagnosisDate(), is("02/1972"));
+        assertThat(dsForm.getDiagnosisDate(), is("16/02/1972"));
     }
 
     @Test
     public void confirmDiagnosisDateInCurrentMonthIsValid() throws InvalidJsonException {
-        LocalDate workingDate = LocalDate.now().plus(1, ChronoUnit.DAYS);
+        LocalDate workingDate = LocalDate.now();
 
         if (workingDate.getMonthValue() > LocalDate.now().getMonthValue()) {
             workingDate = LocalDate.now(); // cover off the month being in the future
@@ -187,34 +172,42 @@ public class Ds1500JsonValidatorTest {
         String dateDay = workingDate.getDayOfMonth() < 10 ? String.format("0%d", workingDate.getDayOfMonth()) : String.valueOf(workingDate.getDayOfMonth());
 
         String partialJsonResponse = String.format("{\n" +
-            "  \"patientName\":\"Pele\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"%s\",\n" +
-            "  \"patientDateOfBirth-month\":\"%s\",\n" +
-            "  \"patientDateOfBirth-year\":\"%d\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"%s\",\n" +
-            "  \"dateOfDiagnosis-year\":\"%d\",\n" +
-            getReponseForOtherDiagnosesOnwards(), dateDay, dateMonth, workingDate.getYear() - 2, dateMonth, workingDate.getYear());
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"%s\",\n" +
+                "  \"patientDateOfBirth-month\":\"%s\",\n" +
+                "  \"patientDateOfBirth-year\":\"%d\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"%s\",\n" +
+                "  \"dateOfDiagnosis-month\":\"%s\",\n" +
+                "  \"dateOfDiagnosis-year\":\"%d\",\n" +
+                "  \"dateOfSpecialRules-day\":\"%s\",\n" +
+                "  \"dateOfSpecialRules-month\":\"%s\",\n" +
+                "  \"dateOfSpecialRules-year\":\"%d\",\n" +
+                getReponseForOtherDiagnosesOnwards(), dateDay, dateMonth, workingDate.getYear() - 2, dateDay, dateMonth, workingDate.getYear(), dateDay, dateMonth, workingDate.getYear());
 
         DSForm dsForm = validator.validateAndTranslate(partialJsonResponse);
-        assertThat(dsForm.getDiagnosisDate(), is(String.format("%s/%d", dateMonth, workingDate.getYear())));
+        assertThat(dsForm.getDiagnosisDate(), is(String.format("%s/%s/%d", dateDay, dateMonth, workingDate.getYear())));
     }
 
     @Test
     public void confirmDiagnosisDateInFebruaryWithDateOfBirthInOctoberIsValid() throws InvalidJsonException {
         String partialJsonResponse = "{\n" +
-            "  \"patientName\":\"Pele\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"31\",\n" +
-            "  \"patientDateOfBirth-month\":\"10\",\n" +
-            "  \"patientDateOfBirth-year\":\"1973\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"02\",\n" +
-            "  \"dateOfDiagnosis-year\":\"2012\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"31\",\n" +
+                "  \"patientDateOfBirth-month\":\"10\",\n" +
+                "  \"patientDateOfBirth-year\":\"1973\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"02\",\n" +
+                "  \"dateOfDiagnosis-month\":\"02\",\n" +
+                "  \"dateOfDiagnosis-year\":\"2012\",\n" +
+                "  \"dateOfSpecialRules-day\":\"02\",\n" +
+                "  \"dateOfSpecialRules-month\":\"03\",\n" +
+                "  \"dateOfSpecialRules-year\":\"2012\",\n" +
+                getReponseForOtherDiagnosesOnwards();
 
         validator.validateAndTranslate(partialJsonResponse);
     }
@@ -222,50 +215,80 @@ public class Ds1500JsonValidatorTest {
     @Test
     public void confirmDiagnosisDateInLaterMonthAndSameYearAsDOBIsValid() throws InvalidJsonException {
         String partialJsonResponse = "{\n" +
-            "  \"patientName\":\"Pele\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"15\",\n" +
-            "  \"patientDateOfBirth-month\":\"02\",\n" +
-            "  \"patientDateOfBirth-year\":\"1972\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"03\",\n" +
-            "  \"dateOfDiagnosis-year\":\"1972\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"15\",\n" +
+                "  \"patientDateOfBirth-month\":\"02\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"25\",\n" +
+                "  \"dateOfDiagnosis-month\":\"03\",\n" +
+                "  \"dateOfDiagnosis-year\":\"1972\",\n" +
+                "  \"dateOfSpecialRules-day\":\"25\",\n" +
+                "  \"dateOfSpecialRules-month\":\"03\",\n" +
+                "  \"dateOfSpecialRules-year\":\"1973\",\n" +
+                getReponseForOtherDiagnosesOnwards();
         DSForm dsForm = validator.validateAndTranslate(partialJsonResponse);
-        assertThat(dsForm.getDiagnosisDate(), is("03/1972"));
+        assertThat(dsForm.getDiagnosisDate(), is("25/03/1972"));
     }
 
     @Test
     public void confirmDiagnosisDateInEarlierMonthAndLaterYearAsDOBIsValid() throws InvalidJsonException {
         String partialJsonResponse = "{\n" +
-            "  \"patientName\":\"Pele\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"15\",\n" +
-            "  \"patientDateOfBirth-month\":\"02\",\n" +
-            "  \"patientDateOfBirth-year\":\"1972\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"01\",\n" +
-            "  \"dateOfDiagnosis-year\":\"1973\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"15\",\n" +
+                "  \"patientDateOfBirth-month\":\"02\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"01\",\n" +
+                "  \"dateOfDiagnosis-month\":\"01\",\n" +
+                "  \"dateOfDiagnosis-year\":\"1973\",\n" +
+                "  \"dateOfSpecialRules-day\":\"01\",\n" +
+                "  \"dateOfSpecialRules-month\":\"01\",\n" +
+                "  \"dateOfSpecialRules-year\":\"1973\",\n" +
+                getReponseForOtherDiagnosesOnwards();
         DSForm dsForm = validator.validateAndTranslate(partialJsonResponse);
-        assertThat(dsForm.getDiagnosisDate(), is("01/1973"));
+        assertThat(dsForm.getDiagnosisDate(), is("01/01/1973"));
+    }
+
+    @Test
+    public void confirmDiagnosisDateInSameDayMonthAndYearAsDOBIsValid() throws InvalidJsonException {
+        String partialJsonResponse = "{\n" +
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"15\",\n" +
+                "  \"patientDateOfBirth-month\":\"02\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"15\",\n" +
+                "  \"dateOfDiagnosis-month\":\"02\",\n" +
+                "  \"dateOfDiagnosis-year\":\"1973\",\n" +
+                "  \"dateOfSpecialRules-day\":\"15\",\n" +
+                "  \"dateOfSpecialRules-month\":\"02\",\n" +
+                "  \"dateOfSpecialRules-year\":\"1973\",\n" +
+                getReponseForOtherDiagnosesOnwards();
+        DSForm dsForm = validator.validateAndTranslate(partialJsonResponse);
+        assertThat(dsForm.getDiagnosisDate(), is("15/02/1973"));
     }
 
     @Test
     public void confirmDiagnosisInEarlierMonthAndSameYearAsDOBFailsAndThrowsAnException() {
         String partialJsonResponse = "{\n" +
-            "  \"patientName\":\"Pele\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"15\",\n" +
-            "  \"patientDateOfBirth-month\":\"02\",\n" +
-            "  \"patientDateOfBirth-year\":\"1972\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"01\",\n" +
-            "  \"dateOfDiagnosis-year\":\"1972\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"15\",\n" +
+                "  \"patientDateOfBirth-month\":\"02\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"01\",\n" +
+                "  \"dateOfDiagnosis-month\":\"01\",\n" +
+                "  \"dateOfDiagnosis-year\":\"1972\",\n" +
+                getReponseForOtherDiagnosesOnwards();
         try {
             validator.validateAndTranslate(partialJsonResponse);
             fail("Date of Diagnosis earlier than DOB should fail and throw an exception");
@@ -275,18 +298,42 @@ public class Ds1500JsonValidatorTest {
     }
 
     @Test
+    public void confirmDiagnosisInEarlierDayAndSameMonthYearAsDOBFailsAndThrowsAnException() {
+        String partialJsonResponse = "{\n" +
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"15\",\n" +
+                "  \"patientDateOfBirth-month\":\"02\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"02\",\n" +
+                "  \"dateOfDiagnosis-month\":\"02\",\n" +
+                "  \"dateOfDiagnosis-year\":\"1972\",\n" +
+                getReponseForOtherDiagnosesOnwards();
+        try {
+            validator.validateAndTranslate(partialJsonResponse);
+            fail("Date of Diagnosis earlier than DOB should fail and throw an exception");
+        } catch (Exception e) {
+            assertThat("error caught", e.getMessage(), containsString("Date of diagnosis cannot be earlier than Patient DOB"));
+        }
+    }
+
+
+    @Test
     public void confirmDiagnosisInSameMonthAndEarlierYearAsDOBFailsAndThrowsAnException() {
         String partialJsonResponse = "{\n" +
-            "  \"patientName\":\"Pele\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"15\",\n" +
-            "  \"patientDateOfBirth-month\":\"02\",\n" +
-            "  \"patientDateOfBirth-year\":\"1972\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"02\",\n" +
-            "  \"dateOfDiagnosis-year\":\"1971\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"15\",\n" +
+                "  \"patientDateOfBirth-month\":\"02\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"01\",\n" +
+                "  \"dateOfDiagnosis-month\":\"02\",\n" +
+                "  \"dateOfDiagnosis-year\":\"1971\",\n" +
+                getReponseForOtherDiagnosesOnwards();
         try {
             validator.validateAndTranslate(partialJsonResponse);
             fail("Date of Diagnosis earlier than DOB should fail and throw an exception");
@@ -298,16 +345,17 @@ public class Ds1500JsonValidatorTest {
     @Test
     public void confirmDiagnosisInLaterMonthAndEarlierYearAsDOBFailsAndThrowsAnException() {
         String partialJsonResponse = "{\n" +
-            "  \"patientName\":\"Pele\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"15\",\n" +
-            "  \"patientDateOfBirth-month\":\"02\",\n" +
-            "  \"patientDateOfBirth-year\":\"1972\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"03\",\n" +
-            "  \"dateOfDiagnosis-year\":\"1971\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"15\",\n" +
+                "  \"patientDateOfBirth-month\":\"02\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"01\",\n" +
+                "  \"dateOfDiagnosis-month\":\"03\",\n" +
+                "  \"dateOfDiagnosis-year\":\"1971\",\n" +
+                getReponseForOtherDiagnosesOnwards();
         try {
             validator.validateAndTranslate(partialJsonResponse);
             fail("Date of Diagnosis earlier than DOB should fail and throw an exception");
@@ -380,28 +428,6 @@ public class Ds1500JsonValidatorTest {
                 assertThat("error caught", e.getMessage(), containsString(Ds1500JsonValidator.NINO_ERROR_MESSAGE));
             }
         }
-    }
-
-    @Test
-    public void confirmInvalidRepresentativePostcodeThrowsAnException() {
-        try {
-            validator.validateAndTranslate(buildFullRequestWithMissingFieldGPConsultant("representativePostcode", "\"123456789\""));
-            fail("Representative postcode over 8 characters should throw an exception");
-        } catch (InvalidJsonException e) {
-            assertThat("error caught", e.getMessage(), containsString("'representativePostcode' fails validation"));
-        }
-    }
-
-    @Test
-    public void confirmThatABlankRepresentativePostcodeIsAccepted() throws InvalidJsonException {
-        DSForm dsform = validator.validateAndTranslate(buildFullRequestWithMissingFieldGPConsultant("representativePostcode", null));
-        assertThat("Representative line 3 mismatch", dsform.getRepresentative3(), nullValue());
-    }
-
-    @Test
-    public void confirmThatABlankRepresentativePostcodeIsAccepted2() throws InvalidJsonException {
-        DSForm dsform = validator.validateAndTranslate(buildFullRequestWithMissingFieldGPConsultant("representativePostcode", "\"\""));
-        assertThat("Representative line 3 mismatch", dsform.getRepresentative3(), is(equalTo("")));
     }
 
     @Test
@@ -543,18 +569,13 @@ public class Ds1500JsonValidatorTest {
         assertThat("Address line 3 mismatch", dsForm.getAddress()[2], is("Fake"));
         assertThat("Postcode mismatch", dsForm.getPostcode(), is("S2 2RZ"));
         assertThat("DOB mismatch", dsForm.getDateOfBirth(), is("15/02/1972"));
-        assertThat("Diagnosis date mismatch", dsForm.getDiagnosisDate(), is("05/2015"));
+        assertThat("Diagnosis date mismatch", dsForm.getDiagnosisDate(), is("11/05/2015"));
         assertThat("NINO mismatch", dsForm.getnINumber(), is("AA370773A"));
         assertThat("Diagnosis mismatch", dsForm.getDiagnosis(), is("Extreme grumpiness"));
         assertThat("Other diagnosis mismatch", dsForm.getOtherDiagnosis(), is("Mild allergies to dub step"));
         assertThat("Patient aware mismatch", dsForm.getPatientAware(), is("Yes"));
-        assertThat("Form requestor mismatch", dsForm.getFormRequestor(), is("Representative"));
-        assertThat("Representative line 1 mismatch", dsForm.getRepresentative1(), is("Representative name"));
-        assertThat("Representative line 2 mismatch", dsForm.getRepresentative2(), is("21 Representative Road"));
-        assertThat("Representative line 3 mismatch", dsForm.getRepresentative3(), is("NW1 3ER"));
         assertThat("Clinical features mismatch", dsForm.getClinicalFeatures(), is("Mr Coupe's clinical features"));
         assertThat("Treatment mismatch", dsForm.getTreatment(), is("Beer, loud music, fluffy kittens"));
-        assertThat("Other treatment mismatch", dsForm.getOtherTreatment(), is("None whatsoever"));
         assertThat("Declaration mismatch", dsForm.getDeclaration(), is("Other"));
         assertThat("Other mismatch", dsForm.getOther(), is("Fred Bloggs"));
         assertThat("Declarer name mismatch", dsForm.getDeclarerName(), is("Dr. Michael Hfuhruhurr"));
@@ -574,14 +595,12 @@ public class Ds1500JsonValidatorTest {
         assertThat("Address line 3 mismatch", dsForm.getAddress()[2], is("Fake"));
         assertThat("PostCode mismatch", dsForm.getPostcode(), is("S2 2RZ"));
         assertThat("DOB mismatch", dsForm.getDateOfBirth(), is("15/02/1972"));
-        assertThat("Diagnosis mismatch", dsForm.getDiagnosisDate(), is("05/2015"));
+        assertThat("Diagnosis mismatch", dsForm.getDiagnosisDate(), is("01/05/2015"));
         assertThat("Diagnosis mismatch", dsForm.getDiagnosis(), is("Extreme grumpiness"));
         assertThat("Other diagnosis mismatch", dsForm.getOtherDiagnosis(), is("Mild allergies to dub step"));
         assertThat("Patient Aware mismatch", dsForm.getPatientAware(), is("Yes"));
-        assertThat("Form requestor mismatch", dsForm.getFormRequestor(), is("Patient"));
         assertThat("Clinical features mismatch", dsForm.getClinicalFeatures(), is("Mr Coupe's clinical features"));
         assertThat("Treatment mismatch", dsForm.getTreatment(), is("Beer, loud music, fluffy kittens"));
-        assertThat("Other treatment mismatch", dsForm.getOtherTreatment(), is("None whatsoever"));
         assertThat("Declaration mismatch", dsForm.getDeclaration(), is("General Practitioner"));
         assertThat("Other declaration person mismatch", dsForm.getOther(), is(""));
         assertThat("Declarer name mismatch", dsForm.getDeclarerName(), is("Dr. Michael Hfuhruhurr"));
@@ -595,22 +614,26 @@ public class Ds1500JsonValidatorTest {
     public void confirmDiagnosisDateIsSentWithoutDayValue() throws InvalidJsonException {
         String partialJsonResponse = "{\n" + "  \"patientName\":\"Paul Michael Coupe\",\n" + getDefaultResponseAfterName();
         DSForm dsForm = validator.validateAndTranslate(partialJsonResponse);
-        assertThat("Diagnosis date mismatch", dsForm.getDiagnosisDate(), is("05/2015"));
+        assertThat("Diagnosis date mismatch", dsForm.getDiagnosisDate(), is("01/05/2015"));
     }
 
     @Test
     public void confirmNameSplitIsCorrectForOneName() throws InvalidJsonException {
         String partialJsonResponse = "{\n" +
-            "  \"patientName\":\"Pele\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"15\",\n" +
-            "  \"patientDateOfBirth-month\":\"02\",\n" +
-            "  \"patientDateOfBirth-year\":\"1972\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"05\",\n" +
-            "  \"dateOfDiagnosis-year\":\"2015\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"15\",\n" +
+                "  \"patientDateOfBirth-month\":\"02\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"01\",\n" +
+                "  \"dateOfDiagnosis-month\":\"05\",\n" +
+                "  \"dateOfDiagnosis-year\":\"2015\",\n" +
+                "  \"dateOfSpecialRules-day\":\"01\",\n" +
+                "  \"dateOfSpecialRules-month\":\"05\",\n" +
+                "  \"dateOfSpecialRules-year\":\"2015\",\n" +
+                getReponseForOtherDiagnosesOnwards();
         DSForm dsForm = validator.validateAndTranslate(partialJsonResponse);
         assertThat(dsForm.getSurname(), is("PELE"));
         assertThat(dsForm.getOtherNames(), is(""));
@@ -635,11 +658,12 @@ public class Ds1500JsonValidatorTest {
         buildAndCheckRequestForMissingFieldOfGPConsultant("declaration");
         buildAndCheckRequestForMissingFieldOfGPConsultant("gpName");
         buildAndCheckRequestForMissingFieldOfGPConsultant("gpAddress");
+        buildAndCheckRequestForMissingFieldOfGPConsultant("gpPostcode");
         buildAndCheckRequestForMissingFieldOfGPConsultant("gpPhone");
         buildAndCheckRequestForMissingFieldOfGPConsultant("treatment");
         buildAndCheckRequestForMissingFieldOfGPConsultant("clinicalFeatures");
-        buildAndCheckRequestForMissingFieldOfGPConsultant("formRequester");
         buildAndCheckRequestForMissingFieldOfGPConsultant("patientAware");
+        buildAndCheckRequestForMissingFieldOfGPConsultant("diagnosisAware");
         buildAndCheckRequestForMissingFieldOfGPConsultant("gmcNumber");
     }
 
@@ -657,11 +681,12 @@ public class Ds1500JsonValidatorTest {
         buildAndCheckRequestForMissingFieldOfOther("declaration");
         buildAndCheckRequestForMissingFieldOfOther("gpName");
         buildAndCheckRequestForMissingFieldOfOther("gpAddress");
+        buildAndCheckRequestForMissingFieldOfOther("gpPostcode");
         buildAndCheckRequestForMissingFieldOfOther("gpPhone");
         buildAndCheckRequestForMissingFieldOfOther("treatment");
         buildAndCheckRequestForMissingFieldOfOther("clinicalFeatures");
-        buildAndCheckRequestForMissingFieldOfOther("formRequester");
         buildAndCheckRequestForMissingFieldOfOther("patientAware");
+        buildAndCheckRequestForMissingFieldOfOther("diagnosisAware");
     }
 
     @Test
@@ -678,11 +703,12 @@ public class Ds1500JsonValidatorTest {
         buildAndCheckRequestForEmptyFieldOfGPConsultant("declaration");
         buildAndCheckRequestForEmptyFieldOfGPConsultant("gpName");
         buildAndCheckRequestForEmptyFieldOfGPConsultant("gpAddress");
+        buildAndCheckRequestForEmptyFieldOfGPConsultant("gpPostcode");
         buildAndCheckRequestForEmptyFieldOfGPConsultant("gpPhone");
         buildAndCheckRequestForEmptyFieldOfGPConsultant("treatment");
         buildAndCheckRequestForEmptyFieldOfGPConsultant("clinicalFeatures");
-        buildAndCheckRequestForEmptyFieldOfGPConsultant("formRequester");
         buildAndCheckRequestForEmptyFieldOfGPConsultant("patientAware");
+        buildAndCheckRequestForEmptyFieldOfGPConsultant("diagnosisAware");
         buildAndCheckRequestForEmptyFieldOfGPConsultant("gmcNumber");
     }
 
@@ -700,11 +726,12 @@ public class Ds1500JsonValidatorTest {
         buildAndCheckRequestForEmptyFieldOfOther("declaration");
         buildAndCheckRequestForEmptyFieldOfOther("gpName");
         buildAndCheckRequestForEmptyFieldOfOther("gpAddress");
+        buildAndCheckRequestForEmptyFieldOfOther("gpPostcode");
         buildAndCheckRequestForEmptyFieldOfOther("gpPhone");
         buildAndCheckRequestForEmptyFieldOfOther("treatment");
         buildAndCheckRequestForEmptyFieldOfOther("clinicalFeatures");
-        buildAndCheckRequestForEmptyFieldOfOther("formRequester");
         buildAndCheckRequestForEmptyFieldOfOther("patientAware");
+        buildAndCheckRequestForEmptyFieldOfOther("diagnosisAware");
     }
 
     @Test
@@ -717,17 +744,17 @@ public class Ds1500JsonValidatorTest {
         buildAndCheckRequestForLargeFieldOfGPConsultant("patientDobYear");
         buildAndCheckRequestForLargeFieldOfGPConsultant("diagnosis");
         buildAndCheckRequestForLargeFieldOfGPConsultant("otherDiagnoses");
-        buildAndCheckRequestForLargeFieldOfGPConsultant("otherIntervention");
         buildAndCheckRequestForLargeFieldOfGPConsultant("diagnosisMonth");
         buildAndCheckRequestForLargeFieldOfGPConsultant("diagnosisYear");
         buildAndCheckRequestForLargeFieldOfGPConsultant("declaration");
         buildAndCheckRequestForLargeFieldOfGPConsultant("gpName");
         buildAndCheckRequestForLargeFieldOfGPConsultant("gpAddress");
+        buildAndCheckRequestForLargeFieldOfGPConsultant("gpPostcode");
         buildAndCheckRequestForLargeFieldOfGPConsultant("gpPhone");
         buildAndCheckRequestForLargeFieldOfGPConsultant("treatment");
         buildAndCheckRequestForLargeFieldOfGPConsultant("clinicalFeatures");
-        buildAndCheckRequestForLargeFieldOfGPConsultant("formRequester");
         buildAndCheckRequestForLargeFieldOfGPConsultant("patientAware");
+        buildAndCheckRequestForLargeFieldOfGPConsultant("diagnosisAware");
         buildAndCheckRequestForEmptyFieldOfGPConsultant("gmcNumber");
     }
 
@@ -741,17 +768,17 @@ public class Ds1500JsonValidatorTest {
         buildAndCheckRequestForLargeFieldOfOther("patientDobYear");
         buildAndCheckRequestForLargeFieldOfOther("diagnosis");
         buildAndCheckRequestForLargeFieldOfOther("otherDiagnoses");
-        buildAndCheckRequestForLargeFieldOfOther("otherIntervention");
         buildAndCheckRequestForLargeFieldOfOther("diagnosisMonth");
         buildAndCheckRequestForLargeFieldOfOther("diagnosisYear");
         buildAndCheckRequestForLargeFieldOfOther("declaration");
         buildAndCheckRequestForLargeFieldOfOther("gpName");
         buildAndCheckRequestForLargeFieldOfOther("gpAddress");
+        buildAndCheckRequestForLargeFieldOfOther("gpPostcode");
         buildAndCheckRequestForLargeFieldOfOther("gpPhone");
         buildAndCheckRequestForLargeFieldOfOther("treatment");
         buildAndCheckRequestForLargeFieldOfOther("clinicalFeatures");
-        buildAndCheckRequestForLargeFieldOfOther("formRequester");
         buildAndCheckRequestForLargeFieldOfOther("patientAware");
+        buildAndCheckRequestForLargeFieldOfOther("diagnosisAware");
     }
 
     @Test
@@ -764,17 +791,17 @@ public class Ds1500JsonValidatorTest {
         buildAndCheckRequestForInvalidFieldOfGPConsultant("patientDobYear");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("diagnosis");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("otherDiagnoses");
-        buildAndCheckRequestForInvalidFieldOfGPConsultant("otherIntervention");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("diagnosisMonth");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("diagnosisYear");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("declaration");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("gpName");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("gpAddress");
+        buildAndCheckRequestForInvalidFieldOfGPConsultant("gpPostcode");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("gpPhone");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("treatment");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("clinicalFeatures");
-        buildAndCheckRequestForInvalidFieldOfGPConsultant("formRequester");
         buildAndCheckRequestForInvalidFieldOfGPConsultant("patientAware");
+        buildAndCheckRequestForInvalidFieldOfGPConsultant("diagnosisAware");
         buildAndCheckRequestForEmptyFieldOfGPConsultant("gmcNumber");
     }
 
@@ -788,17 +815,17 @@ public class Ds1500JsonValidatorTest {
         buildAndCheckRequestForInvalidFieldOfOther("patientDobYear");
         buildAndCheckRequestForInvalidFieldOfOther("diagnosis");
         buildAndCheckRequestForInvalidFieldOfOther("otherDiagnoses");
-        buildAndCheckRequestForInvalidFieldOfOther("otherIntervention");
         buildAndCheckRequestForInvalidFieldOfOther("diagnosisMonth");
         buildAndCheckRequestForInvalidFieldOfOther("diagnosisYear");
         buildAndCheckRequestForInvalidFieldOfOther("declaration");
         buildAndCheckRequestForInvalidFieldOfOther("gpName");
         buildAndCheckRequestForInvalidFieldOfOther("gpAddress");
+        buildAndCheckRequestForInvalidFieldOfOther("gpPostcode");
         buildAndCheckRequestForInvalidFieldOfOther("gpPhone");
         buildAndCheckRequestForInvalidFieldOfOther("treatment");
         buildAndCheckRequestForInvalidFieldOfOther("clinicalFeatures");
-        buildAndCheckRequestForInvalidFieldOfOther("formRequester");
         buildAndCheckRequestForInvalidFieldOfOther("patientAware");
+        buildAndCheckRequestForInvalidFieldOfOther("diagnosisAware");
     }
 
     @Test
@@ -840,11 +867,76 @@ public class Ds1500JsonValidatorTest {
     @Test
     public void confirmNameSplitIsCorrectForThreeNames() throws InvalidJsonException {
         String partialJsonResponse = "{\n" +
-            "  \"patientName\":\"Fake Michael Man\",\n" +
-            getDefaultResponseAfterName();
+                "  \"patientName\":\"Fake Michael Man\",\n" +
+                getDefaultResponseAfterName();
         DSForm dsForm = validator.validateAndTranslate(partialJsonResponse);
         assertThat(dsForm.getSurname(), is("MAN"));
         assertThat(dsForm.getOtherNames(), is("FAKE MICHAEL"));
+    }
+
+    @Test
+    public void confirmSpecialDateInTodayValid() throws InvalidJsonException {
+        LocalDate workingDate = LocalDate.now();
+
+
+
+        if (workingDate.getMonthValue() > LocalDate.now().getMonthValue()) {
+            workingDate = LocalDate.now(); // cover off the month being in the future
+        }
+
+        String dateMonth = workingDate.getMonthValue() < 10 ? String.format("0%d", workingDate.getMonthValue()) : String.valueOf(workingDate.getMonthValue());
+        String dateDay = workingDate.getDayOfMonth() < 10 ? String.format("0%d", workingDate.getDayOfMonth()) : String.valueOf(workingDate.getDayOfMonth());
+
+        String partialJsonResponse = String.format("{\n" +
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"%s\",\n" +
+                "  \"patientDateOfBirth-month\":\"%s\",\n" +
+                "  \"patientDateOfBirth-year\":\"%d\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"1\",\n" +
+                "  \"dateOfDiagnosis-month\":\"5\",\n" +
+                "  \"dateOfDiagnosis-year\":\"2022\",\n" +
+                "  \"dateOfSpecialRules-day\":\"%s\",\n" +
+                "  \"dateOfSpecialRules-month\":\"%s\",\n" +
+                "  \"dateOfSpecialRules-year\":\"%d\",\n" +
+                getReponseForOtherDiagnosesOnwards(), dateDay, dateMonth, workingDate.getYear() - 2, dateDay, dateMonth, workingDate.getYear());
+
+        DSForm dsForm = validator.validateAndTranslate(partialJsonResponse);
+        assertThat(dsForm.getSpecialDate(), is(String.format("%s/%s/%d", dateDay, dateMonth, workingDate.getYear())));
+    }
+
+    @Test
+    public void confirmSpecialDateCantBeInFutureInValid() throws InvalidJsonException {
+        LocalDate workingDate = LocalDate.now();
+
+
+
+        if (workingDate.getMonthValue() > LocalDate.now().getMonthValue()) {
+            workingDate = LocalDate.now(); // cover off the month being in the future
+        }
+
+        String dateMonth = workingDate.getMonthValue() < 10 ? String.format("0%d", workingDate.getMonthValue()) : String.valueOf(workingDate.getMonthValue());
+        String dateDay = workingDate.getDayOfMonth() < 10 ? String.format("0%d", workingDate.getDayOfMonth()) : String.valueOf(workingDate.getDayOfMonth());
+
+        String partialJsonResponse = String.format("{\n" +
+                "  \"patientName\":\"Pele\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"%s\",\n" +
+                "  \"patientDateOfBirth-month\":\"%s\",\n" +
+                "  \"patientDateOfBirth-year\":\"%d\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"1\",\n" +
+                "  \"dateOfDiagnosis-month\":\"5\",\n" +
+                "  \"dateOfDiagnosis-year\":\"2022\",\n" +
+                "  \"dateOfSpecialRules-day\":\"%s\",\n" +
+                "  \"dateOfSpecialRules-month\":\"%s\",\n" +
+                "  \"dateOfSpecialRules-year\":\"%d\",\n" +
+                getReponseForOtherDiagnosesOnwards(), dateDay, dateMonth, workingDate.getYear() - 2, dateDay, dateMonth, workingDate.getYear() + 1);
+
+        validateAndCatchException(partialJsonResponse, "Date is in the future");
     }
 
     private String getDayFromDate(Date date) {
@@ -868,60 +960,65 @@ public class Ds1500JsonValidatorTest {
 
     private String getDefaultResponseAfterName() {
         return "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"15\",\n" +
-            "  \"patientDateOfBirth-month\":\"02\",\n" +
-            "  \"patientDateOfBirth-year\":\"1972\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"05\",\n" +
-            "  \"dateOfDiagnosis-year\":\"2015\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"15\",\n" +
+                "  \"patientDateOfBirth-month\":\"02\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"01\",\n" +
+                "  \"dateOfDiagnosis-month\":\"05\",\n" +
+                "  \"dateOfDiagnosis-year\":\"2015\",\n" +
+                "  \"dateOfSpecialRules-day\":\"01\",\n" +
+                "  \"dateOfSpecialRules-month\":\"05\",\n" +
+                "  \"dateOfSpecialRules-year\":\"2015\",\n" +
+                getReponseForOtherDiagnosesOnwards();
     }
 
     private String buildResponseWithDobOf(String day, String month, String year) {
         return "{\n" +
-            "  \"patientName\":\"Fake Michael Man\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"" + day + "\",\n" +
-            "  \"patientDateOfBirth-month\":\"" + month + "\",\n" +
-            "  \"patientDateOfBirth-year\":\"" + year + "\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-day\":\"11\",\n" +
-            "  \"dateOfDiagnosis-month\":\"05\",\n" +
-            "  \"dateOfDiagnosis-year\":\"2015\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientName\":\"Fake Michael Man\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"" + day + "\",\n" +
+                "  \"patientDateOfBirth-month\":\"" + month + "\",\n" +
+                "  \"patientDateOfBirth-year\":\"" + year + "\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-day\":\"11\",\n" +
+                "  \"dateOfDiagnosis-month\":\"05\",\n" +
+                "  \"dateOfDiagnosis-year\":\"2015\",\n" +
+                getReponseForOtherDiagnosesOnwards();
     }
 
     private String buildResponseWithDiagnosisDateOf(String month, String year) {
         return "{\n" +
-            "  \"patientName\":\"Fake Michael Man\",\n" +
-            "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
-            "  \"patientPostcode\":\"S2 2RZ\",\n" +
-            "  \"patientDateOfBirth-day\":\"01\",\n" +
-            "  \"patientDateOfBirth-month\":\"01\",\n" +
-            "  \"patientDateOfBirth-year\":\"1972\",\n" +
-            "  \"diagnosis\":\"Extreme grumpiness\",\n" +
-            "  \"dateOfDiagnosis-month\":\"" + month + "\",\n" +
-            "  \"dateOfDiagnosis-year\":\"" + year + "\",\n" +
-            getReponseForOtherDiagnosesOnwards();
+                "  \"patientName\":\"Fake Michael Man\",\n" +
+                "  \"patientAddress\":\"23 Fake Road\\nFake Park\\nFake\",\n" +
+                "  \"patientPostcode\":\"S2 2RZ\",\n" +
+                "  \"patientDateOfBirth-day\":\"01\",\n" +
+                "  \"patientDateOfBirth-month\":\"01\",\n" +
+                "  \"patientDateOfBirth-year\":\"1972\",\n" +
+                "  \"diagnosis\":\"Extreme grumpiness\",\n" +
+                "  \"dateOfDiagnosis-month\":\"" + month + "\",\n" +
+                "  \"dateOfDiagnosis-year\":\"" + year + "\",\n" +
+                getReponseForOtherDiagnosesOnwards();
     }
 
     private String getReponseForOtherDiagnosesOnwards() {
         return "  \"otherDiagnoses\":\"Mild allergies to dub step\",\n" +
-            "  \"patientAware\":\"Yes\",\n" +
-            "  \"formRequester\":\"Patient\",\n" +
-            "  \"clinicalFeatures\":\"Mr Coupe's clinical features\",\n" +
-            "  \"treatment\":\"Beer, loud music, fluffy kittens\",\n" +
-            "  \"otherIntervention\":\"None whatsoever\",\n" +
-            "  \"declaration\":\"General Practitioner\",\n" +
-            "  \"declarationAdditionalDetail\":\"\",\n" +
-            "  \"gpName\":\"Dr. Michael Hfuhruhurr\",\n" +
-            "  \"gpAddress\":\"Porter Brook Medical Centre\",\n" +
-            "  \"gpPhone\":\"0114 258 8520\",\n" +
-            "  \"gmcNumber\":\"1234567\",\n" +
-            "  \"vatRegistered\":\"Yes\",\n" +
-            "  \"firstFromSurgery\":\"Yes\"}";
+                "  \"patientAware\":\"Yes\",\n" +
+                "  \"diagnosisAware\":\"Yes\",\n" +
+                "  \"formRequester\":\"Patient\",\n" +
+                "  \"clinicalFeatures\":\"Mr Coupe's clinical features\",\n" +
+                "  \"treatment\":\"Beer, loud music, fluffy kittens\",\n" +
+                "  \"declaration\":\"General Practitioner\",\n" +
+                "  \"declarationAdditionalDetail\":\"\",\n" +
+                "  \"gpName\":\"Dr. Michael Hfuhruhurr\",\n" +
+                "  \"gpAddress\":\"Porter Brook Medical Centre\",\n" +
+                "  \"gpPostcode\":\"IN3 2JJ\",\n" +
+                "  \"gpPhone\":\"0114 258 8520\",\n" +
+                "  \"gmcNumber\":\"1234567\",\n" +
+                "  \"vatRegistered\":\"Yes\",\n" +
+                "  \"firstFromSurgery\":\"Yes\"}";
     }
 
 
@@ -976,66 +1073,60 @@ public class Ds1500JsonValidatorTest {
 
     private String buildFullRequestWithMissingFieldGPConsultant(String missingField, String replaceString) {
         return buildRequest(
-            (missingField.equals("patientName") ? replaceString : "\"Fake Man\""),
-            (missingField.equals("patientAddress") ? replaceString : "\"23 Fake Road\\nFake Park\\nFake\""),
-            (missingField.equals("patientPostcode") ? replaceString : "\"S2 2RZ\""),
-            (missingField.equals("patientDobDay") ? replaceString : "\"15\""),
-            (missingField.equals("patientDobMonth") ? replaceString : "\"02\""),
-            (missingField.equals("patientDobYear") ? replaceString : "\"1972\""),
-            (missingField.equals("patientNino") ? replaceString : "\"AA370773A\""),
-            (missingField.equals("diagnosis") ? replaceString : "\"Extreme grumpiness\""),
-            (missingField.equals("diagnosisDay") ? replaceString : "\"11\""),
-            (missingField.equals("diagnosisMonth") ? replaceString : "\"05\""),
-            (missingField.equals("diagnosisYear") ? replaceString : "\"2015\""),
-            (missingField.equals("otherDiagnoses") ? replaceString : "\"Mild allergies to dub step\""),
-            (missingField.equals("patientAware") ? replaceString : "\"Yes\""),
-            (missingField.equals("formRequester") ? replaceString : "\"Representative\""),
-            (missingField.equals("representativeName") ? replaceString : "\"Representative name\""),
-            (missingField.equals("representativeAddress") ? replaceString : "\"21 Representative Road\""),
-            (missingField.equals("representativePostcode") ? replaceString : "\"NW1 3ER\""),
-            (missingField.equals("clinicalFeatures") ? replaceString : "\"Mr Coupe's clinical features\""),
-            (missingField.equals("treatment") ? replaceString : "\"Beer, loud music, fluffy kittens\""),
-            (missingField.equals("otherIntervention") ? replaceString : "\"None whatsoever\""),
-            (missingField.equals("declaration") ? replaceString : "\"General Practitioner\""),
-            (missingField.equals("declarationAdditionalDetail") ? replaceString : "\"\""),
-            (missingField.equals("gpName") ? replaceString : "\"Dr. Michael Hfuhruhurr\""),
-            (missingField.equals("gpAddress") ? replaceString : "\"Porter Brook Medical Centre\""),
-            (missingField.equals("gpPhone") ? replaceString : "\"0114 258 8520\""),
-            (missingField.equals("gmcNumber") ? replaceString : "\"1234567\""),
-            (missingField.equals("vatRegistered") ? replaceString : "\"Yes\""),
-            (missingField.equals("firstFromSurgery") ? replaceString : "\"Yes\""));
+                (missingField.equals("patientName") ? replaceString : "\"Fake Man\""),
+                (missingField.equals("patientAddress") ? replaceString : "\"23 Fake Road\\nFake Park\\nFake\""),
+                (missingField.equals("patientPostcode") ? replaceString : "\"S2 2RZ\""),
+                (missingField.equals("patientDobDay") ? replaceString : "\"15\""),
+                (missingField.equals("patientDobMonth") ? replaceString : "\"02\""),
+                (missingField.equals("patientDobYear") ? replaceString : "\"1972\""),
+                (missingField.equals("patientNino") ? replaceString : "\"AA370773A\""),
+                (missingField.equals("diagnosis") ? replaceString : "\"Extreme grumpiness\""),
+                (missingField.equals("diagnosisDay") ? replaceString : "\"11\""),
+                (missingField.equals("diagnosisMonth") ? replaceString : "\"05\""),
+                (missingField.equals("diagnosisYear") ? replaceString : "\"2015\""),
+                (missingField.equals("otherDiagnoses") ? replaceString : "\"Mild allergies to dub step\""),
+                (missingField.equals("patientAware") ? replaceString : "\"Yes\""),
+                (missingField.equals("diagnosisAware") ? replaceString : "\"Yes\""),
+                (missingField.equals("clinicalFeatures") ? replaceString : "\"Mr Coupe's clinical features\""),
+                (missingField.equals("treatment") ? replaceString : "\"Beer, loud music, fluffy kittens\""),
+                (missingField.equals("declaration") ? replaceString : "\"General Practitioner\""),
+                (missingField.equals("declarationAdditionalDetail") ? replaceString : "\"\""),
+                (missingField.equals("gpName") ? replaceString : "\"Dr. Michael Hfuhruhurr\""),
+                (missingField.equals("gpAddress") ? replaceString : "\"Porter Brook Medical Centre\""),
+                (missingField.equals("gpPostcode") ? replaceString : "\"IN3 2JJ\""),
+                (missingField.equals("gpPhone") ? replaceString : "\"0114 258 8520\""),
+                (missingField.equals("gmcNumber") ? replaceString : "\"1234567\""),
+                (missingField.equals("vatRegistered") ? replaceString : "\"Yes\""),
+                (missingField.equals("firstFromSurgery") ? replaceString : "\"Yes\""));
     }
 
     private String buildFullRequestWithMissingFieldForOtherDeclaration(String missingField, String replaceString) {
         return buildRequest(
-            (missingField.equals("patientName") ? replaceString : "\"Fake Man\""),
-            (missingField.equals("patientAddress") ? replaceString : "\"23 Fake Road\\nFake Park\\nFake\""),
-            (missingField.equals("patientPostcode") ? replaceString : "\"S2 2RZ\""),
-            (missingField.equals("patientDobDay") ? replaceString : "\"15\""),
-            (missingField.equals("patientDobMonth") ? replaceString : "\"02\""),
-            (missingField.equals("patientDobYear") ? replaceString : "\"1972\""),
-            (missingField.equals("patientNino") ? replaceString : "\"AA370773A\""),
-            (missingField.equals("diagnosis") ? replaceString : "\"Extreme grumpiness\""),
-            (missingField.equals("diagnosisDay") ? replaceString : "\"11\""),
-            (missingField.equals("diagnosisMonth") ? replaceString : "\"05\""),
-            (missingField.equals("diagnosisYear") ? replaceString : "\"2015\""),
-            (missingField.equals("otherDiagnoses") ? replaceString : "\"Mild allergies to dub step\""),
-            (missingField.equals("patientAware") ? replaceString : "\"Yes\""),
-            (missingField.equals("formRequester") ? replaceString : "\"Representative\""),
-            (missingField.equals("representativeName") ? replaceString : "\"Representative name\""),
-            (missingField.equals("representativeAddress") ? replaceString : "\"21 Representative Road\""),
-            (missingField.equals("representativePostcode") ? replaceString : "\"NW1 3ER\""),
-            (missingField.equals("clinicalFeatures") ? replaceString : "\"Mr Coupe's clinical features\""),
-            (missingField.equals("treatment") ? replaceString : "\"Beer, loud music, fluffy kittens\""),
-            (missingField.equals("otherIntervention") ? replaceString : "\"None whatsoever\""),
-            (missingField.equals("declaration") ? replaceString : "\"Other\""),
-            (missingField.equals("declarationAdditionalDetail") ? replaceString : "\"Fred Bloggs\""),
-            (missingField.equals("gpName") ? replaceString : "\"Dr. Michael Hfuhruhurr\""),
-            (missingField.equals("gpAddress") ? replaceString : "\"Porter Brook Medical Centre\""),
-            (missingField.equals("gpPhone") ? replaceString : "\"0114 258 8520\""),
-            null,
-            null,
-            null);
+                (missingField.equals("patientName") ? replaceString : "\"Fake Man\""),
+                (missingField.equals("patientAddress") ? replaceString : "\"23 Fake Road\\nFake Park\\nFake\""),
+                (missingField.equals("patientPostcode") ? replaceString : "\"S2 2RZ\""),
+                (missingField.equals("patientDobDay") ? replaceString : "\"15\""),
+                (missingField.equals("patientDobMonth") ? replaceString : "\"02\""),
+                (missingField.equals("patientDobYear") ? replaceString : "\"1972\""),
+                (missingField.equals("patientNino") ? replaceString : "\"AA370773A\""),
+                (missingField.equals("diagnosis") ? replaceString : "\"Extreme grumpiness\""),
+                (missingField.equals("diagnosisDay") ? replaceString : "\"11\""),
+                (missingField.equals("diagnosisMonth") ? replaceString : "\"05\""),
+                (missingField.equals("diagnosisYear") ? replaceString : "\"2015\""),
+                (missingField.equals("otherDiagnoses") ? replaceString : "\"Mild allergies to dub step\""),
+                (missingField.equals("patientAware") ? replaceString : "\"Yes\""),
+                (missingField.equals("diagnosisAware") ? replaceString : "\"Yes\""),
+                (missingField.equals("clinicalFeatures") ? replaceString : "\"Mr Coupe's clinical features\""),
+                (missingField.equals("treatment") ? replaceString : "\"Beer, loud music, fluffy kittens\""),
+                (missingField.equals("declaration") ? replaceString : "\"Other\""),
+                (missingField.equals("declarationAdditionalDetail") ? replaceString : "\"Fred Bloggs\""),
+                (missingField.equals("gpName") ? replaceString : "\"Dr. Michael Hfuhruhurr\""),
+                (missingField.equals("gpAddress") ? replaceString : "\"Porter Brook Medical Centre\""),
+                (missingField.equals("gpPostcode") ? replaceString : "\"IN3 2JJ\""),
+                (missingField.equals("gpPhone") ? replaceString : "\"0114 258 8520\""),
+                null,
+                null,
+                null);
     }
 
     private String buildRequest(final String patientName,
@@ -1051,17 +1142,14 @@ public class Ds1500JsonValidatorTest {
                                 final String diagnosisYear,
                                 final String otherDiagnosis,
                                 final String patientAware,
-                                final String formRequestor,
-                                final String representativeName,
-                                final String representativeAddress,
-                                final String representativePostcode,
+                                final String diagnosisAware,
                                 final String clinicalFeatures,
                                 final String treatment,
-                                final String intervention,
                                 final String declarer,
                                 final String declarerAdditional,
                                 final String gpName,
                                 final String gpAddress,
+                                final String gpPostcode,
                                 final String gpPhone,
                                 final String gmcNumber,
                                 final String vatRegistered,
@@ -1094,12 +1182,15 @@ public class Ds1500JsonValidatorTest {
         }
         if (diagnosisDay != null) {
             stringBuilder.append("  \"dateOfDiagnosis-day\":").append(diagnosisDay).append(",\n");
+            stringBuilder.append("  \"dateOfSpecialRules-day\":").append(diagnosisDay).append(",\n");
         }
         if (diagnosisMonth != null) {
             stringBuilder.append("  \"dateOfDiagnosis-month\":").append(diagnosisMonth).append(",\n");
+            stringBuilder.append("  \"dateOfSpecialRules-month\":").append(diagnosisMonth).append(",\n");
         }
         if (diagnosisYear != null) {
             stringBuilder.append("  \"dateOfDiagnosis-year\":").append(diagnosisYear).append(",\n");
+            stringBuilder.append("  \"dateOfSpecialRules-year\":").append(diagnosisYear).append(",\n");
         }
         if (otherDiagnosis != null) {
             stringBuilder.append("  \"otherDiagnoses\":").append(otherDiagnosis).append(",\n");
@@ -1107,26 +1198,14 @@ public class Ds1500JsonValidatorTest {
         if (patientAware != null) {
             stringBuilder.append("  \"patientAware\":").append(patientAware).append(",\n");
         }
-        if (formRequestor != null) {
-            stringBuilder.append("  \"formRequester\":").append(formRequestor).append(",\n");
-        }
-        if (representativeName != null) {
-            stringBuilder.append("  \"representativeName\":").append(representativeName).append(",\n");
-        }
-        if (representativeAddress != null) {
-            stringBuilder.append("  \"representativeAddress\":").append(representativeAddress).append(",\n");
-        }
-        if (representativePostcode != null) {
-            stringBuilder.append("  \"representativePostcode\":").append(representativePostcode).append(",\n");
+        if (patientAware != null) {
+            stringBuilder.append("  \"diagnosisAware\":").append(diagnosisAware).append(",\n");
         }
         if (clinicalFeatures != null) {
             stringBuilder.append("  \"clinicalFeatures\":").append(clinicalFeatures).append(",\n");
         }
         if (treatment != null) {
             stringBuilder.append("  \"treatment\":").append(treatment).append(",\n");
-        }
-        if (intervention != null) {
-            stringBuilder.append("  \"otherIntervention\":").append(intervention).append(",\n");
         }
         if (declarer != null) {
             stringBuilder.append("  \"declaration\":").append(declarer).append(",\n");
@@ -1139,6 +1218,9 @@ public class Ds1500JsonValidatorTest {
         }
         if (gpAddress != null) {
             stringBuilder.append("  \"gpAddress\":").append(gpAddress).append(",\n");
+        }
+        if (gpPostcode != null) {
+            stringBuilder.append("  \"gpPostcode\":").append(gpPostcode).append(",\n");
         }
         if (gpPhone != null) {
             stringBuilder.append("  \"gpPhone\":").append(gpPhone).append(",\n");

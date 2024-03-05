@@ -16,4 +16,8 @@
         <Class name="uk.gov.dwp.health.ds1500controller.domain.Ds1500Metadata"/>
         <Bug pattern="EI_EXPOSE_REP" />
     </Match>
+    <Match>
+        <Class name="uk.gov.dwp.health.ds1500controller.Ds1500JsonValidator"/>
+        <Bug pattern="DM_BOXED_PRIMITIVE_FOR_PARSING" />
+    </Match>
 </FindBugsFilter>

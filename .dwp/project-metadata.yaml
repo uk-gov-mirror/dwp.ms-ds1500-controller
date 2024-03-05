@@ -6,11 +6,11 @@ project:
   - project_id: 27293902
     component_name: ms-ds1500-controller
 
-    version: 1.10.1
+    version: 1.11.0
 
     last_verified:
-      date: "2023-10-05"
-      name: "@stephen-nimako"
+      date: "2024-02-13"
+      name: "@aayush-srikanth"
 
     tags:
       payments: false

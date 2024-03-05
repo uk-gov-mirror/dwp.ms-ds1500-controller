@@ -75,12 +75,12 @@ public class ControllerSteps {
             "  \"dateOfDiagnosis-day\":\"11\",\n" +
             "  \"dateOfDiagnosis-month\":\"05\",\n" +
             "  \"dateOfDiagnosis-year\":\"2015\",\n" +
+            "  \"dateOfSpecialRules-day\":\"11\",\n" +
+            "  \"dateOfSpecialRules-month\":\"05\",\n" +
+            "  \"dateOfSpecialRules-year\":\"2015\",\n" +
             "  \"otherDiagnoses\":\"Mild allergies to dub step\",\n" +
+            "  \"diagnosisAware\":\"Yes\",\n" +
             "  \"patientAware\":\"Yes\",\n" +
-            "  \"formRequester\":\"Representative\",\n" +
-            "  \"representativeName\":\"Representative name\",\n" +
-            "  \"representativeAddress\":\"21 Representative Road\",\n" +
-            "  \"representativePostcode\":\"NW1 3ER\",\n" +
             "  \"clinicalFeatures\":\"Mr Coupe's clinical features\",\n" +
             "  \"treatment\":\"Beer, loud music, fluffy kittens\",\n" +
             "  \"otherIntervention\":\"None whatsoever\",\n" +
@@ -88,6 +88,7 @@ public class ControllerSteps {
             "  \"declarationAdditionalDetail\":\"\",\n" +
             "  \"gpName\":\"Dr. Michael Hfuhruhurr\",\n" +
             "  \"gpAddress\":\"Porter Brook Medical Centre\",\n" +
+            "  \"gpPostcode\":\"IN3 2JJ\",\n" +
             "  \"gpPhone\":\"0114 258 8520\",\n" +
             "  \"gmcNumber\":\"1234567\"}";
 
@@ -103,12 +104,12 @@ public class ControllerSteps {
             "  \"dateOfDiagnosis-day\":\"11\",\n" +
             "  \"dateOfDiagnosis-month\":\"05\",\n" +
             "  \"dateOfDiagnosis-year\":\"2015\",\n" +
+            "  \"dateOfSpecialRules-day\":\"11\",\n" +
+            "  \"dateOfSpecialRules-month\":\"05\",\n" +
+            "  \"dateOfSpecialRules-year\":\"2015\",\n" +
             "  \"otherDiagnoses\":\"Mild allergies to dub step\",\n" +
+            "  \"diagnosisAware\":\"Yes\",\n" +
             "  \"patientAware\":\"Yes\",\n" +
-            "  \"formRequester\":\"Representative\",\n" +
-            "  \"representativeName\":\"Representative name\",\n" +
-            "  \"representativeAddress\":\"21 Representative Road\",\n" +
-            "  \"representativePostcode\":\"NW1 3ER\",\n" +
             "  \"clinicalFeatures\":\"Mr Coupe's clinical features\",\n" +
             "  \"treatment\":\"Beer, loud music, fluffy kittens\",\n" +
             "  \"otherIntervention\":\"None whatsoever\",\n" +
@@ -116,6 +117,7 @@ public class ControllerSteps {
             "  \"declarationAdditionalDetail\":\"Nurse\",\n" +
             "  \"gpName\":\"McMillan Nurse\",\n" +
             "  \"gpAddress\":\"Porter Brook Medical Centre\",\n" +
+            "  \"gpPostcode\":\"IN3 2JJ\",\n" +
             "  \"gpPhone\":\"0114 258 8520\"}";
 
     private static final String FULL_JSON_REQUEST_BAD_GP = "{\n" +
@@ -130,12 +132,12 @@ public class ControllerSteps {
             "  \"dateOfDiagnosis-day\":\"11\",\n" +
             "  \"dateOfDiagnosis-month\":\"05\",\n" +
             "  \"dateOfDiagnosis-year\":\"2015\",\n" +
+            "  \"dateOfSpecialRules-day\":\"11\",\n" +
+            "  \"dateOfSpecialRules-month\":\"05\",\n" +
+            "  \"dateOfSpecialRules-year\":\"2015\",\n" +
             "  \"otherDiagnoses\":\"Mild allergies to dub step\",\n" +
+            "  \"diagnosisAware\":\"Yes\",\n" +
             "  \"patientAware\":\"Yes\",\n" +
-            "  \"formRequester\":\"Representative\",\n" +
-            "  \"representativeName\":\"Representative name\",\n" +
-            "  \"representativeAddress\":\"21 Representative Road\",\n" +
-            "  \"representativePostcode\":\"NW1 3ER\",\n" +
             "  \"clinicalFeatures\":\"Mr Coupe's clinical features\",\n" +
             "  \"treatment\":\"Beer, loud music, fluffy kittens\",\n" +
             "  \"otherIntervention\":\"None whatsoever\",\n" +
@@ -143,6 +145,7 @@ public class ControllerSteps {
             "  \"declarationAdditionalDetail\":\"\",\n" +
             "  \"gpName\":\"Dr. Michael Hfuhruhurr\",\n" +
             "  \"gpAddress\":\"Porter Brook Medical Centre\",\n" +
+            "  \"gpPostcode\":\"IN3 2JJ\",\n" +
             "  \"gpPhone\":\"0114 258 8520\"}";
 
     private static final String INVALID_JSON = "{\"messy\":\"Lionel\"";
