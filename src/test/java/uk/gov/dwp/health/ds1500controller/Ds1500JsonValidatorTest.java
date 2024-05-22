@@ -901,7 +901,7 @@ public class Ds1500JsonValidatorTest {
                 "  \"dateOfSpecialRules-day\":\"%s\",\n" +
                 "  \"dateOfSpecialRules-month\":\"%s\",\n" +
                 "  \"dateOfSpecialRules-year\":\"%d\",\n" +
-                getReponseForOtherDiagnosesOnwards(), dateDay, dateMonth, workingDate.getYear() - 2, dateDay, dateMonth, workingDate.getYear());
+                getReponseForOtherDiagnosesOnwards(), dateDay, dateMonth, workingDate.getYear() - 5, dateDay, dateMonth, workingDate.getYear());
 
         DSForm dsForm = validator.validateAndTranslate(partialJsonResponse);
         assertThat(dsForm.getSpecialDate(), is(String.format("%s/%s/%d", dateDay, dateMonth, workingDate.getYear())));

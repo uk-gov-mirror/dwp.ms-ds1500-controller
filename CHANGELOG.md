@@ -1,3 +1,8 @@
+<a name="1-11-1"></a>
+# 1-11-1 (2024-05-14)
+
+* chore: update dependency versions ([ab36b6b](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/ab36b6b))
+
 <a name="1-11-0"></a>
 # 1-11-0 (2024-02-13)
 

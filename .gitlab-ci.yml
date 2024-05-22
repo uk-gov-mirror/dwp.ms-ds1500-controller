@@ -32,7 +32,7 @@ variables:
   REPO_PATTERN: "V3 CI"
   # Config
   BUILD_TYPE: "MAVEN"
-  MAVEN_IMAGE: "maven:3-amazoncorretto-17"
+  MAVEN_IMAGE: "maven:3.9.6-eclipse-temurin-17"
   MVN_OPTS: "-DLOG_LEVEL=INFO"
   MVN_CLI_OPTS: "--batch-mode"
   GITHUB_REPO_NAME: "ms-ds1500-controller" # Used for open-source fragment
@@ -55,3 +55,7 @@ create-develop-nightly-schedule:
     SCHEDULE_BRANCH: develop
     SCHEDULE_CRON: "0 20 * * *"
     RANDOMIZE_MINS: "true"
+
+### SECURITY
+gitleaks:
+  extends: .gitleaks-template-saas

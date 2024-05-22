@@ -1,4 +1,7 @@
-FROM gcr.io/distroless/java17@sha256:68e2373f7bef9486c08356bd9ffd3b40b56e6b9316c5f6885eb58b1d9093b43d
+FROM maven:3.9.6-eclipse-temurin-17
+RUN groupadd --gid 1000 nonroot \
+    && useradd --uid 1000 --gid 1000 -m nonroot
+
 EXPOSE 9013
 USER nonroot
 COPY target/ms-ds1500-controller-*.jar /ms-ds1500-controller.jar

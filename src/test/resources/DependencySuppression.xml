@@ -8,35 +8,16 @@
         </notes>
         <packageUrl regex="true">^pkg:maven/org\.bouncycastle/bc\-fips@.*$</packageUrl>
         <cve>CVE-2023-33202</cve>
+        <cve>CVE-2024-29857</cve>
     </suppress>
     <suppress>
         <notes>
             <![CDATA[
-            file name:  jetty-io-11.0.16.jar suppress until maintainer has addressed
-            file name:  jetty-util-11.0.16.jar suppress until maintainer has addressed
-            ]]>
-        </notes>
-        <packageUrl regex="true">^pkg:maven/org\.eclipse\.jetty/jetty.*$</packageUrl>
-        <cve>CVE-2023-44487</cve>
-    </suppress>
-    <suppress>
-        <notes>
-            <![CDATA[
-                file name: metrics-httpclient5-4.2.18.jar until dropwizard update
+                file name: metrics-httpclient5-4.2.25.jar until dropwizard update
             ]]></notes>
         <packageUrl regex="true">^pkg:maven/io\.dropwizard\.metrics/metrics\-httpclient5@.*$</packageUrl>
         <cve>CVE-2020-13956</cve>
         <cve>CVE-2014-3577</cve>
-    </suppress>
-    <suppress>
-        <notes>
-            <![CDATA[
-                file name: logback-core-1.4.11.jar until dropwizard update
-                file name: logback-access-1.4.11.jar until dropwizard update
-                file name: logback-classic-1.4.11.jar until dropwizard update
-            ]]></notes>
-        <packageUrl regex="true">^pkg:maven/ch\.qos\.logback/logback.*$</packageUrl>
-        <cve>CVE-2023-6378</cve>
     </suppress>
     <suppress>
         <notes>
