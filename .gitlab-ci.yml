@@ -56,6 +56,3 @@ create-develop-nightly-schedule:
     SCHEDULE_CRON: "0 20 * * *"
     RANDOMIZE_MINS: "true"
 
-### SECURITY
-gitleaks:
-  extends: .gitleaks-template-saas

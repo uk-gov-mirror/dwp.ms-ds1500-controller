@@ -70,7 +70,8 @@ public class Ds1500ControllerResource {
     DSForm form;
     try {
       form = validator.validateAndTranslate(jsonPayload);
-      LOG.info("Submission received from {}", form.getDeclarerName());
+      LOG.info("Submission received");
+      LOG.debug("Submission received from {}", form.getDeclarerName());
 
       Ds1500Metadata drsMetadata = metadataBuilder.buildPayload(form, LocalDate.now());
 
@@ -90,7 +91,7 @@ public class Ds1500ControllerResource {
 
       publishMessageToSns(messageQueueEvent);
 
-      LOG.info(
+      LOG.debug(
           "DS1500 form successfully published to SNS from {} with correlationId {}",
           form.getDeclarerName(),
           correlationId);

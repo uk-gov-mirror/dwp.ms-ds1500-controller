@@ -35,7 +35,7 @@ services:
   cucumber-tests:
     image: ${MAVEN_IMAGE}
     environment:
-      - SETTINGS_FILE=${MVN_SETTINGS_FILE_SAAS}
+      - SETTINGS_FILE=${MVN_SETTINGS_FILE}
       - GITLAB_REGISTRY_TOKEN=${GITLAB_REGISTRY_TOKEN}
     entrypoint: /bin/bash -c
     command:
@@ -47,7 +47,7 @@ services:
     volumes:
       - .:/usr/src
       - ${MVN_M2}:/root/.m2
-      - ${MVN_SETTINGS_FILE_SAAS}:/root/.m2/settings.xml
+      - ${MVN_SETTINGS_FILE}:/root/.m2/settings.xml
     networks:
       - test
 

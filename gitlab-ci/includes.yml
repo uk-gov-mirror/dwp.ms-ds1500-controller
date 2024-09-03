@@ -15,7 +15,7 @@ include:
       file: 'ci-include-update-semver.yml'
     #code-quality
     - project: 'dwp/engineering/pipeline-solutions/gitlab/fragments/gitleaks'
-      ref: 3.1.1
+      ref: 3.1.2
       file: 'ci-include-gitleaks.yml'
     - project: 'dwp/engineering/pipeline-solutions/gitlab/fragments/shell-check'
       ref: 3-1-4
@@ -31,10 +31,10 @@ include:
       file: 'ci-include-docker-lint.yml'
     #code-test
     - project: 'dwp/engineering/pipeline-solutions/gitlab/fragments/maven-api-test'
-      ref: 3.6.1
+      ref: 3.6.2
       file: 'ci-include-maven-api-test.yml'
     - project: 'dwp/engineering/pipeline-solutions/gitlab/fragments/docker-compose-run'
-      ref: 3-3-2
+      ref: 3.4.0
       file: 'ci-include-docker-compose-run.yml'
     #application-build
     - project: 'dwp/engineering/pipeline-solutions/gitlab/fragments/maven-api-build'
@@ -48,7 +48,7 @@ include:
       ref: 3.4.0
       file: 'ci-include-maven-api-spotbugs.yml'
     - project: 'dwp/engineering/pipeline-solutions/gitlab/fragments/gitlab-sast'
-      ref: 1-0-3
+      ref: 2.0.0
       file: 'ci-include-gitlab-sast.yml'
     - project: 'dwp/engineering/pipeline-solutions/gitlab/fragments/maven-dependency-version-check'
       ref: 2.3.2
@@ -77,7 +77,7 @@ include:
       file: 'ci-include-push-to-ecr.yml'
     #update-project-metadata
     - project: 'dwp/engineering/pipeline-solutions/gitlab/fragments/create-project-badges'
-      ref: 2.3.0
+      ref: 2.4.0
       file: 'ci-include-create-project-badges.yml'
     #pages
     - project: 'dwp/engineering/pipeline-solutions/gitlab/fragments/pages-tech-docs'

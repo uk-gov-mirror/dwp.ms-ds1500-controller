@@ -1,3 +1,11 @@
+<a name="1-12-0"></a>
+# 1-12-0 (2024-07-26)
+
+* bug: fix controller not starting up & remove PII ([67bf344](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/67bf344))
+* chore: metadata and fragments update ([fee746d](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/fee746d))
+* ci: revert saas & update fragments ([b14fd0e](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/b14fd0e))
+
+
 <a name="1-11-1"></a>
 # 1-11-1 (2024-05-14)
 
