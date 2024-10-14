@@ -91,6 +91,7 @@ public class Ds1500ControllerResource {
 
       publishMessageToSns(messageQueueEvent);
 
+      LOG.info("DS1500 form successfully published to SNS");
       LOG.debug(
           "DS1500 form successfully published to SNS from {} with correlationId {}",
           form.getDeclarerName(),

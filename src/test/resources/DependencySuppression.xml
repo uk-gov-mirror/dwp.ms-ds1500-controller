@@ -27,4 +27,20 @@
         <packageUrl regex="true">^pkg:maven/software\.amazon\.ion/ion\-java@.*$</packageUrl>
         <cve>CVE-2024-21634</cve>
     </suppress>
+    <suppress>
+        <notes>
+            <![CDATA[
+                file name: jakarta.el-4.0.2.jar until update
+            ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.glassfish/jakarta\.el@.*$</packageUrl>
+        <cve>CVE-2024-9329</cve>
+    </suppress>
+    <suppress>
+        <notes>
+            <![CDATA[
+                file name: osgi-resource-locator-1.0.3.jar until update
+            ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.glassfish\.hk2/osgi\-resource\-locator@.*$</packageUrl>
+        <cve>CVE-2024-9329</cve>
+    </suppress>
 </suppressions>

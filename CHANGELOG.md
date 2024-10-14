@@ -1,3 +1,8 @@
+<a name="1-12-1"></a>
+# 1-12-1 (2024-10-04)
+* bug: fix cloudwatch dashboard([80ff242b](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/80ff242bfdef28bcdf824eb34e6e00ced15dedab))
+
+
 <a name="1-12-0"></a>
 # 1-12-0 (2024-07-26)
 

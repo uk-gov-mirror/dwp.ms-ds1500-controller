@@ -6,7 +6,7 @@
 
     <groupId>uk.gov.dwp.health.ds1500</groupId>
     <artifactId>ms-ds1500-controller</artifactId>
-    <version>1.12.0</version>
+    <version>1.12.1</version>
 
     <properties>
         <dwp.secure-sockets.version>1.10.0-c057ae20</dwp.secure-sockets.version>
