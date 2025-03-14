@@ -15,14 +15,14 @@ Managed by the Dwp Health PDU.
 
 ## Build
 
-Using Java 11 and Dropwizard
+Using Java 17 and Dropwizard
 
 * clone repository and run `mvn clean package`
 * starting the service - `java -jar target/ms-ds1500-controller-<version>.jar server path/to/config.yml`
 
 ## Test
 
-Using Java 11, Dropwizard, Junit 4
+Using Java 17, Dropwizard, Junit 4
 
 * mvn clean test
 
@@ -56,3 +56,27 @@ The CI pipeline has a stage which sets up a schedule to run the `develop` branch
 ## Production Release
 
 To create production artefacts the following process must be followed https://confluence.service.dwpcloud.uk/display/DHWA/SRE
+
+## Update dependencies
+
+Config sits in maven-version-rules.xml
+
+**To display updates**
+`mvn versions:display-dependency-updates`
+
+**To apply updates**
+`mvn versions:update-properties -DgenerateBackupPoms=false`
+
+## Scripts
+
+Scripts to speed up general maintenance
+Strongly recommended to run before pushing
+
+**Update metadata**
+`./updateMetadata.sh`
+
+**Run mvn jobs that run in gitlab**
+`./mvnCheck.sh`
+
+
+

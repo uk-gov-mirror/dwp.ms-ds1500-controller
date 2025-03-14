@@ -6,14 +6,14 @@
 
     <groupId>uk.gov.dwp.health.ds1500</groupId>
     <artifactId>ms-ds1500-controller</artifactId>
-    <version>1.12.1</version>
+    <version>1.13.1</version>
 
     <properties>
         <dwp.secure-sockets.version>1.10.0-c057ae20</dwp.secure-sockets.version>
-        <dwp.securestrings.version>2.0.0-8c44034d</dwp.securestrings.version>
+        <dwp.securestrings.version>2.2.0-a5e0f3b7</dwp.securestrings.version>
         <dwp.encoded-log.version>3.0.0-dfda47f2</dwp.encoded-log.version>
         <dwp.drsinteg.version>1.7.0-008b5a52</dwp.drsinteg.version>
-        <dwp.postcode.version>1.3.1-3aba24cb</dwp.postcode.version>
+        <dwp.postcode.version>2.0.0-8cab2309</dwp.postcode.version>
         <dwp.events.version>4.0.0-5bc46d5a</dwp.events.version>
         <dwp.crypto.version>3.1.0-8859d262</dwp.crypto.version>
         <dwp.nino.version>1.3.2-7c450b4d</dwp.nino.version>
@@ -22,41 +22,54 @@
         <java.source.version>17</java.source.version>
         <java.target.version>17</java.target.version>
 
-        <plugin.compiler.version>3.13.0</plugin.compiler.version>
-        <plugin.versions-maven.version>2.16.2</plugin.versions-maven.version>
-        <plugin.site.version>4.0.0-M13</plugin.site.version>
-        <plugin.jacoco.version>0.8.10</plugin.jacoco.version>
-        <plugin.maven.spotbugs.version>4.7.3.4</plugin.maven.spotbugs.version>
-        <plugin.spotbugs.version>4.8.4</plugin.spotbugs.version>
-        <doxia.version>2.0.0-M10</doxia.version>
-        <libphonenumber.version>8.13.36</libphonenumber.version>
-        <plugin.surefire.version>3.2.5</plugin.surefire.version>
-        <plugin.spring-boot.version>3.3.1</plugin.spring-boot.version>
-        <snakeyaml.version>2.2</snakeyaml.version>
+        <plugin.compiler.version>3.14.0</plugin.compiler.version>
+        <plugin.versions-maven.version>2.18.0</plugin.versions-maven.version>
+        <plugin.site.version>4.0.0-M16</plugin.site.version>
+        <plugin.jacoco.version>0.8.12</plugin.jacoco.version>
+        <plugin.maven.spotbugs.version>4.9.1.0</plugin.maven.spotbugs.version>
+        <plugin.spotbugs.version>4.9.1</plugin.spotbugs.version>
+        <doxia.version>2.0.0</doxia.version>
+        <libphonenumber.version>8.13.55</libphonenumber.version>
+        <plugin.surefire.version>3.5.2</plugin.surefire.version>
+        <plugin.spring-boot.version>3.4.3</plugin.spring-boot.version>
+        <plugin.pitest.version>1.18.2</plugin.pitest.version>
+        <plugin.versions>2.18.0</plugin.versions>
 
-        <slf4j-api.vesion>2.0.13</slf4j-api.vesion>
-        <log4j.version>2.20.0</log4j.version>
-        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
+        <slf4j-api.vesion>2.0.17</slf4j-api.vesion>
+        <log4j.version>2.24.3</log4j.version>
+        <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javax.activation.version>1.1.1</javax.activation.version>
-        <google.guava.version>33.2.0-jre</google.guava.version>
-        <cucumber-core.version>7.17.0</cucumber-core.version>
-        <dropwizard.version>4.0.7</dropwizard.version>
-        <dropwizard.junit4.version>4.0.7</dropwizard.junit4.version>
-        <commons-io.version>2.16.1</commons-io.version>
+        <google.guava.version>33.4.0-jre</google.guava.version>
+        <cucumber-core.version>7.21.1</cucumber-core.version>
+        <dropwizard.version>4.0.12</dropwizard.version>
+        <dropwizard.junit4.version>4.0.12</dropwizard.junit4.version>
+        <commons-io.version>2.18.0</commons-io.version>
         <wiremock.version>3.0.1</wiremock.version>
-        <mockito.version>5.11.0</mockito.version>
-        <jackson.version>2.17.0</jackson.version>
-        <owasp.version>10.0.2</owasp.version>
+        <mockito.version>5.15.2</mockito.version>
+        <jackson.version>2.18.2</jackson.version>
+        <owasp.version>12.1.0</owasp.version>
         <junit.version>4.13.2</junit.version>
-        <jaxb.version>2.3.1</jaxb.version>
-        <org.testcontainers.version>1.19.7</org.testcontainers.version>
-        <jetty.version>11.0.20</jetty.version>
-        <amqp.version>5.21.0</amqp.version>
-        <bc-fips.version>1.0.2.5</bc-fips.version>
+        <jaxb.version>4.0.2</jaxb.version>
+        <jaxb.impl.version>4.0.5</jaxb.impl.version>
+        <org.testcontainers.version>1.20.5</org.testcontainers.version>
+        <jetty.version>11.0.24</jetty.version>
+        <amqp.version>5.25.0</amqp.version>
+        <bc-fips.version>2.1.0</bc-fips.version>
+        <snakeyaml.version>2.4</snakeyaml.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${google.guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bc-fips</artifactId>
@@ -83,19 +96,9 @@
             <version>${jackson.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>${snakeyaml.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${google.guava.version}</version>
         </dependency>
         <dependency>
             <groupId>uk.gov.dwp.logging</groupId>
@@ -103,8 +106,8 @@
             <version>${dwp.encoded-log.version}</version>
         </dependency>
         <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
             <version>${jaxb.version}</version>
         </dependency>
         <dependency>
@@ -115,12 +118,12 @@
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-            <version>${jaxb.version}</version>
+            <version>${jaxb.impl.version}</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
-            <version>${jaxb.version}</version>
+            <version>${jaxb.impl.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.activation</groupId>
@@ -141,12 +144,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <version>${org.testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -321,9 +318,24 @@
         </resources>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${plugin.versions}</version>
+                <configuration>
+                    <!--  Ignoring as breaking changes -->
+                    <excludes>
+                        <exclude>uk.gov.dwp.health.messageq:messaging-utility:*</exclude>
+                        <exclude>uk.gov.dwp.health.crypto:data-cryptography:*</exclude>
+                        <exclude>uk.gov.dwp.tls:secure-sockets:*</exclude>
+                    </excludes>
+                    <generateBackupPoms>false</generateBackupPoms>
+                    <rulesUri>${project.baseUri}/properties/maven-version-rules.xml</rulesUri>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>1.15.3</version>
+                <version>${plugin.pitest.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -365,7 +377,7 @@
                 <artifactId>spotbugs-maven-plugin</artifactId>
                 <version>${plugin.maven.spotbugs.version}</version>
                 <configuration>
-                    <excludeFilterFile>/spotbugs/spotbugs-ignore.xml</excludeFilterFile>
+                    <excludeFilterFile>/properties/spotbugs-ignore.xml</excludeFilterFile>
                 </configuration>
                 <dependencies>
                     <dependency>

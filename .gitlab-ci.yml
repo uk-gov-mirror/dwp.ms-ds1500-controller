@@ -47,6 +47,12 @@ maven-cucumber:
   variables:
     DOCKER_COMPOSE_FILE: "docker-compose.yml"
     DOCKER_COMPOSE_COMMAND: "--exit-code-from cucumber-tests"
+    MVN_M2: "./.m2-local/"
+  cache:
+    key: ${CACHE_KEY}
+    paths:
+      - .m2-local/
+    when: 'always'
 
 create-develop-nightly-schedule:
   extends: .add-schedule

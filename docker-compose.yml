@@ -4,7 +4,7 @@ networks:
 services:
   localstack:
     container_name: localstack
-    image: localstack/localstack:0.12.16
+    image: localstack/localstack:0.12.16@sha256:22e869ce3ef9782ea05fd0cc1ea47ed713a205c5e8a9f7d319afcd9bbadedae0
     environment:
       SERVICES: ${LOCALSTACK_SERVICES}
       HOSTNAME_EXTERNAL: ${LOCALSTACK_HOSTNAME}
@@ -17,7 +17,7 @@ services:
 
   localstack-init:
     container_name: localstack-init
-    image: mesosphere/aws-cli
+    image: mesosphere/aws-cli@sha256:fb590357c2cf74e868cf110ede38daf4bdf0ebd1bdf36c21d256aa33ab22fa6e
     environment:
       AWS_ACCESS_KEY_ID: dummyaccess
       AWS_SECRET_ACCESS_KEY: dummysecret

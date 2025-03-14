@@ -1,3 +1,33 @@
+<a name="1.13.1"></a>
+# 1.13.1 (2025-03-07)
+
+* release: set version to candidate version in dwp metadata file 1.13.1 ([f6ef3c0](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/f6ef3c0))
+* release: set version to candidate version in pom 1.13.1 ([c09a16b](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/c09a16b))
+* ci: pipeline maintenance ([70f7832](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/70f7832))
+* chore: update pipeline-solutions/gitlab to v2.14.0 ([7520be7](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/7520be7))
+* chore: update maven:3.9.9-eclipse-temurin-17 docker digest to b9fc7a8 ([d2aa6d5](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/d2aa6d5))
+* ci: pipeline maintenance ([809aa12](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/809aa12))
+* ci: pipeline maintenance ([7c6c7b0](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/7c6c7b0))
+* chore: metadata/fragment updates & dependency suppression ([18507f3](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/18507f3))
+* release: set version from 1.13.0 to snapshot 1.14.0-SNAPSHOT [skip ci] ([8f0537c](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/8f0537c))
+
+
+<a name="1.13.0"></a>
+# 1.13.0 (2024-11-26)
+
+* release: set version to candidate version in dwp metadata file 1.13.0 ([42a8ecc](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/42a8ecc))
+* release: set version to candidate version in pom 1.13.0 ([70110f5](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/70110f5))
+* chore: add/update file via GitLabForm [skip ci] ([cbab524](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/cbab524))
+* chore: add/update file via GitLabForm [skip ci] ([842ab1f](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/842ab1f))
+* chore: add/update file via GitLabForm [skip ci] ([8c952e0](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/8c952e0))
+* chore: update automerge/common-ci-updates ([1cde611](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/1cde611))
+* chore: update non-major maven dependency updates ([540bfcc](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/540bfcc))
+* chore: add/update file via GitLabForm [skip ci] ([6f98c5e](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/6f98c5e))
+* chore: add/update file via GitLabForm [skip ci] ([e969ea1](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/e969ea1))
+* chore: add/update file via GitLabForm [skip ci] ([f63ea11](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/f63ea11))
+* Update pom.xml [skip ci] ([1c4e42d](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/1c4e42d))
+
+
 <a name="1-12-1"></a>
 # 1-12-1 (2024-10-04)
 * bug: fix cloudwatch dashboard([80ff242b](https://gitlab.com/dwp/health/ds1500/components/ms-ds1500-controller/-/commit/80ff242bfdef28bcdf824eb34e6e00ced15dedab))
